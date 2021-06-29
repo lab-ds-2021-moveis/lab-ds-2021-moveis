@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: @spring.profiles.active@
+  application:
+    name: moveis_spring_backend
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    locations:
+      - classpath:db/migration
+    sql-migration-prefix: V
+    repeatable-sql-migration-prefix: R
+    sql-migration-separator: __
+    sql-migration-suffixes:
+      - .sql

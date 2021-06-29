@@ -1,0 +1,19 @@
+debug: true
+server:
+  port: 8080
+spring:
+  application:
+    name: moveis_spring_backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/moveis
+    username: postgres
+    password: postgres
+  flyway:
+    url: jdbc:postgresql://localhost:5432/moveis
+    user: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  thymeleaf:
+    cache: false
