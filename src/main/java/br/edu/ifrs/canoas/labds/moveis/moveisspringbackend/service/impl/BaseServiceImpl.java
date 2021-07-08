@@ -11,10 +11,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Transactional
-@AllArgsConstructor
-@NoArgsConstructor
 public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired

@@ -16,3 +16,5 @@ spring:
     sql-migration-separator: __
     sql-migration-suffixes:
       - .sql
+  messages:
+    basename: validation
