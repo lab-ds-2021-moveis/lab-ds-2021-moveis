@@ -30,7 +30,9 @@ public class StoreCustomerDTOValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "NotEmpty");
 
-        // TODO: Uma validação de endereço de email
+        if (!dto.getEmail().contains("@")) {
+            errors.rejectValue("email", "Format.form.email");
+        }
 
         if (customerService.findByEmail(dto.getEmail()) != null) {
             errors.rejectValue("email", "Duplicate.form.email");

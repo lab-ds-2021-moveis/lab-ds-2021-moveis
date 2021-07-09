@@ -1,4 +1,4 @@
-package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web.rest;
+package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.StoreCustomerDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.CustomerService;

@@ -1,5 +1,6 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.config;
 
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.enumeration.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/resources/**", "/register").permitAll()
+                .antMatchers("/internal/**").hasAnyAuthority(
+                    EmployeeRole.MANAGEMENT.toString(),
+                    EmployeeRole.SALES.toString(),
+                    EmployeeRole.STOCK.toString()
+                )
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

@@ -12,7 +12,7 @@
 <form th:action="@{/login}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-    <label for="fieldEmail">E-mail</label>
+    <label for="fieldEmail">Login (e-mail or credential)</label>
     <input id="fieldEmail" name="username" type="text" autofocus>
 
     <label for="fieldPassword">Password</label>
