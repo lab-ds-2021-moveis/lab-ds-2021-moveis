@@ -5,14 +5,19 @@ spring:
   application:
     name: moveis_spring_backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/moveis
-    username: postgres
-    password: postgres
+    url: jdbc:h2:file:./target/testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    h2:
+      console:
+        enabled: true
   flyway:
-    url: jdbc:postgresql://localhost:5432/moveis
-    user: postgres
-    password: postgres
+    url: jdbc:h2:file:./target/testdb
+    user: sa
+    password:
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: validate
   thymeleaf:

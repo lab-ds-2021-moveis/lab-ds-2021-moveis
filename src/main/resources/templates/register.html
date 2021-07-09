@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Create an account</title>
+    <style>
+        input { display: block }
+    </style>
+</head>
+<body>
+<form th:action="@{/register}" method="post" th:object="${customerForm}">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+    <label for="fieldName">Name</label>
+    <input id="fieldName" type="text" th:field="*{name}">
+
+    <label for="fieldEmail">E-mail</label>
+    <input id="fieldEmail" type="text" th:field="*{email}">
+
+    <label for="fieldCpf">CPF</label>
+    <input id="fieldCpf" type="text" th:field="*{cpf}">
+
+    <label for="fieldPhone">Phone</label>
+    <input id="fieldPhone" type="text" th:field="*{phone}">
+
+    <label for="fieldPassword">Password</label>
+    <input id="fieldPassword" type="password" th:field="*{password}">
+
+    <label for="fieldPasswordConfirm">Confirm Password</label>
+    <input id="fieldPasswordConfirm" type="password" th:field="*{passwordConfirm}">
+
+    <button type="submit">Register</button>
+
+    <a th:href="@{/login}">Log In</a>
+    <ul th:if="${#fields.hasErrors('*')}">
+        <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+    </ul>
+</form>
+</body>
+</html>
