@@ -1,35 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
 <head>
-    <meta charset="utf-8">
     <title>Internal</title>
 </head>
 <body>
-<h2>
-    Employees list
-</h2>
-<div th:switch="${employees}">
-    <h2 th:case="null">No employees yet!</h2>
-    <div th:case="*">
-        <h2 class="my-5">Employees</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Credential</th>
-                <th>Role</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="employee : ${employees}">
-                <td th:text="${employee.name}"></td>
-                <td th:text="${employee.credential}"></td>
-                <td th:text="${employee.role}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <a th:href="@{/internal/employee/add}">Add new employee</a>
-</div>
+    <main>
+        <h2>
+            Employees list
+        </h2>
+        <div th:switch="${employees}">
+            <h2 th:case="null">No employees yet!</h2>
+            <div th:case="*">
+                <h2 class="my-5">Employees</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Credential</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee : ${employees}">
+                        <td th:text="${employee.name}"></td>
+                        <td th:text="${employee.credential}"></td>
+                        <td th:text="${employee.role}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a th:href="@{/internal/employee/add}">Add new employee</a>
+        </div>
+    </main>
 </body>
 </html>

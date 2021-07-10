@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
 <head>
-    <meta charset="utf-8">
     <title>Internal</title>
-    <style>
-        input { display: block }
-        select { display: block }
-    </style>
 </head>
 <body>
-<h2>
-    Employees homepage
-</h2>
-<a th:href="@{/internal/employee}">Back do list</a>
-<form th:action="@{/internal/employee/add}" method="post" th:object="${employeeForm}">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-    <label for="fieldCredential">Credential</label>
-    <input id="fieldCredential" type="text" th:field="*{credential}">
-
-    <label for="fieldName">Name</label>
-    <input id="fieldName" type="text" th:field="*{name}">
-
-    <label for="fieldRole">Role</label>
-    <select id="fieldRole" th:field="*{role}">
-        <option th:value="'MANAGEMENT'" th:text="Management"></option>
-        <option th:value="'STOCK'" th:text="Stock"></option>
-        <option th:value="'SALES'" th:text="Sales"></option>
-    </select>
-
-    <label for="fieldPassword">Password</label>
-    <input id="fieldPassword" type="password" th:field="*{password}">
-
-    <label for="fieldPasswordConfirm">Confirm Password</label>
-    <input id="fieldPasswordConfirm" type="password" th:field="*{passwordConfirm}">
-
-    <input type="submit" value="Add">
-
-    <ul th:if="${#fields.hasErrors('*')}">
-        <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
-    </ul>
-</form>
+    <main>
+        <h2>
+            Employees homepage
+        </h2>
+        <a th:href="@{/internal/employee}">Back do list</a>
+        <form th:action="@{/internal/employee/add}" method="post" th:object="${employeeForm}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        
+            <label for="fieldCredential">Credential</label>
+            <input id="fieldCredential" type="text" th:field="*{credential}">
+        
+            <label for="fieldName">Name</label>
+            <input id="fieldName" type="text" th:field="*{name}">
+        
+            <label for="fieldRole">Role</label>
+            <select id="fieldRole" th:field="*{role}">
+                <option th:value="'MANAGEMENT'" th:text="Management"></option>
+                <option th:value="'STOCK'" th:text="Stock"></option>
+                <option th:value="'SALES'" th:text="Sales"></option>
+            </select>
+        
+            <label for="fieldPassword">Password</label>
+            <input id="fieldPassword" type="password" th:field="*{password}">
+        
+            <label for="fieldPasswordConfirm">Confirm Password</label>
+            <input id="fieldPasswordConfirm" type="password" th:field="*{passwordConfirm}">
+        
+            <input type="submit" value="Add">
+        
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+            </ul>
+        </form>
+    </main>
 </body>
 </html>
