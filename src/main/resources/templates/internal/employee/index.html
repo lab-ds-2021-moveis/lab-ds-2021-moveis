@@ -1,35 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
 <head>
-    <meta charset="utf-8">
-    <title>Internal</title>
+    <title>Employees list</title>
 </head>
 <body>
-<h2>
-    Employees list
-</h2>
-<div th:switch="${employees}">
-    <h2 th:case="null">No employees yet!</h2>
-    <div th:case="*">
-        <h2 class="my-5">Employees</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Credential</th>
-                <th>Role</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="employee : ${employees}">
-                <td th:text="${employee.name}"></td>
-                <td th:text="${employee.credential}"></td>
-                <td th:text="${employee.role}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <a th:href="@{/internal/employee/add}">Add new employee</a>
-</div>
+    <main>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a th:href="@{/internal}">Staff</a></li>
+                <li class="is-active">
+                    <a th:href="@{/internal/employee}">Employees</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="title">
+            Employees list
+        </h1>
+        <div class="buttons">
+            <a class="button is-primary" th:href="@{/internal/employee/add}">
+                Add new employee
+            </a>
+        </div>
+        <div th:switch="${employees}">
+            <h2 th:case="null">No employees yet!</h2>
+            <div th:case="*">
+                <table class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Credential</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee : ${employees}">
+                        <td th:text="${employee.name}"></td>
+                        <td th:text="${employee.credential}"></td>
+                        <td th:text="${employee.role}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+    <meta charset="utf-8">
+    <title th:replace="${title}">Loja de Móveis</title>
+    <link rel="stylesheet" type="text/css" href="/styles/app.css" />
+</head>
+<body>
+    <nav class="navbar is-light mb-4" role="navigation" aria-label="main navigation">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a th:href="@{/}" class="navbar-item">
+                    Home
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a th:href="@{/internal}" class="button is-light">
+                            Staff
+                        </a>
+                        <form id="logoutForm" method="POST" th:action="@{/logout}">
+                            <button type="submit" class="button is-light">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="columns">
+        <div class="column is-one-quarter-tablet ml-4">
+            <aside class="menu">
+                <p class="menu-label">General</p>
+                <ul class="menu-list">
+                    <li><a th:href="@{/internal}">Staff homepage</a></li>
+                </ul>
+                <p class="menu-label">Administration</p>
+                <ul class="menu-list">
+                    <li><a th:href="@{/internal/employee}">Employees</a></li>
+                    <li><a th:href="@{/internal/employee/add}">Add employee</a></li>
+                </ul>
+            </aside>
+        </div>
+        
+        <div class="column">
+            <main th:replace="${content}">
+                <p>Layout contents</p>
+            </main>
+        </div>
+    </div>
+        
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2021 Loja de móveis</p>
+        </div>
+    </footer>
+</body>
+</html>

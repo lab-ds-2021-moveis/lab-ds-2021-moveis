@@ -1,28 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
 <head>
-    <meta charset="utf-8">
     <title>Login</title>
-    <style>
-        input { display: block }
-    </style>
 </head>
 <body>
-<span th:text="${message}"></span>
-<form th:action="@{/login}" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <main class="content">
+        <div class="container is-max-desktop">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Login
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <form th:action="@{/login}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-    <label for="fieldEmail">Login (e-mail or credential)</label>
-    <input id="fieldEmail" name="username" type="text" autofocus>
+                            <div class="field">
+                                <label for="fieldEmail" class="label">Login (e-mail or credential)</label>
+                                <div class="control">
+                                    <input id="fieldEmail" class="input" name="username" type="text" autofocus>
+                                </div>
+                            </div>
 
-    <label for="fieldPassword">Password</label>
-    <input id="fieldPassword" name="password" type="password">
+                            <div class="field">
+                                <label for="fieldPassword" class="label">Password</label>
+                                <div class="control">
+                                    <input id="fieldPassword" class="input" name="password" type="password">
+                                </div>
+                            </div>
 
-    <input type="submit" value="Log In">
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button type="submit" class="button is-link">
+                                        Log in
+                                    </button>
+                                </div>
+                            </div>
 
-    <span th:text="${error}"></span>
+                            <span th:text="${message}"></span>
+                            <span th:text="${error}"></span>
 
-    <a th:href="@{/register}">Create an account</a>
-</form>
+                            <a th:href="@{/register}">Create an account</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

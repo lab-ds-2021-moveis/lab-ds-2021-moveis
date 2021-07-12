@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
 <head>
-    <meta charset="utf-8">
     <title>Welcome</title>
 </head>
 <body>
-<h2>
-    Welcome
-</h2>
-<form id="logoutForm" method="POST" th:action="@{/logout}">
-    <input type="submit" value="Logout">
-</form>
+    <main>
+        <h2>
+            Welcome
+        </h2>
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="submit" value="Logout">
+        </form>
+    </main>
 </body>
 </html>
