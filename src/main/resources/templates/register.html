@@ -7,35 +7,77 @@
     <title>Create an account</title>
 </head>
 <body>
-    <main>
-        <form th:action="@{/register}" method="post" th:object="${customerForm}">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <main class="content">
+        <div class="container is-max-desktop">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Register
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <form th:action="@{/register}" method="post" th:object="${customerForm}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-            <label for="fieldName">Name</label>
-            <input id="fieldName" type="text" th:field="*{name}">
+                            <div class="field">
+                                <label for="fieldName" class="label">Name</label>
+                                <div class="control">
+                                    <input id="fieldName" class="input" type="text" th:field="*{name}">
+                                </div>
+                            </div>
 
-            <label for="fieldEmail">E-mail</label>
-            <input id="fieldEmail" type="text" th:field="*{email}">
+                            <div class="field">
+                                <label for="fieldEmail" class="label">E-mail</label>
+                                <div class="control">
+                                    <input id="fieldEmail" class="input" type="text" th:field="*{email}">
+                                </div>
+                            </div>
 
-            <label for="fieldCpf">CPF</label>
-            <input id="fieldCpf" type="text" th:field="*{cpf}">
+                            <div class="field">
+                                <label for="fieldCpf" class="label">CPF</label>
+                                <div class="control">
+                                    <input id="fieldCpf" class="input" type="text" th:field="*{cpf}">
+                                </div>
+                            </div>
 
-            <label for="fieldPhone">Phone</label>
-            <input id="fieldPhone" type="text" th:field="*{phone}">
+                            <div class="field">
+                                <label for="fieldPhone" class="label">Phone</label>
+                                <div class="control">
+                                    <input id="fieldPhone" class="input" type="text" th:field="*{phone}">
+                                </div>
+                            </div>
 
-            <label for="fieldPassword">Password</label>
-            <input id="fieldPassword" type="password" th:field="*{password}">
+                            <div class="field">
+                                <label for="fieldPassword" class="label">Password</label>
+                                <div class="control">
+                                    <input id="fieldPassword" class="input" type="password" th:field="*{password}">
+                                </div>
+                            </div>
 
-            <label for="fieldPasswordConfirm">Confirm Password</label>
-            <input id="fieldPasswordConfirm" type="password" th:field="*{passwordConfirm}">
+                            <div class="field">
+                                <label for="fieldPasswordConfirm" class="label">Confirm Password</label>
+                                <div class="control">
+                                    <input id="fieldPasswordConfirm" class="input" type="password" th:field="*{passwordConfirm}">
+                                </div>
+                            </div>
 
-            <button type="submit">Register</button>
+                            <div class="buttons">
+                                <button class="button is-link" type="submit">
+                                    Register
+                                </button>
+                            </div>
 
-            <a th:href="@{/login}">Log In</a>
-            <ul th:if="${#fields.hasErrors('*')}">
-                <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
-            </ul>
-        </form>
+                            <a th:href="@{/login}">Log In</a>
+
+                            <ul th:if="${#fields.hasErrors('*')}">
+                                <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>
