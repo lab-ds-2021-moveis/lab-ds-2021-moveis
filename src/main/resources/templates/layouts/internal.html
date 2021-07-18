@@ -10,14 +10,14 @@
         <div class="navbar-menu">
             <div class="navbar-start">
                 <a th:href="@{/}" class="navbar-item">
-                    Home
+                    Página inicial
                 </a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
                         <a th:href="@{/internal}" class="button is-light">
-                            Staff
+                            Funcionários
                         </a>
                         <form id="logoutForm" method="POST" th:action="@{/logout}">
                             <button type="submit" class="button is-light">
@@ -31,21 +31,26 @@
     </nav>
 
     <div class="columns">
-        <div class="column is-one-quarter-tablet ml-4">
+        <div class="column is-one-quarter-tablet is-one-fifth-desktop ml-4">
             <aside class="menu">
-                <p class="menu-label">General</p>
+                <p class="menu-label">Geral</p>
                 <ul class="menu-list">
-                    <li><a th:href="@{/internal}">Staff homepage</a></li>
+                    <li><a th:href="@{/internal}">Página de funcionários</a></li>
                 </ul>
-                <p class="menu-label">Administration</p>
+                <p class="menu-label">Administração</p>
                 <ul class="menu-list">
-                    <li><a th:href="@{/internal/employee}">Employees</a></li>
-                    <li><a th:href="@{/internal/employee/add}">Add employee</a></li>
+                    <li><a th:href="@{/internal/employee}">Funcionários</a></li>
+                    <li><a th:href="@{/internal/employee/add}">Adicionar funcionário</a></li>
+                </ul>
+                <p class="menu-label">Produtos</p>
+                <ul class="menu-list">
+                    <li><a th:href="@{/internal/product}">Produtos</a></li>
+                    <li><a th:href="@{/internal/product/add}">Adicionar produto</a></li>
                 </ul>
             </aside>
         </div>
         
-        <div class="column">
+        <div class="column mx-4">
             <main th:replace="${content}">
                 <p>Layout contents</p>
             </main>
