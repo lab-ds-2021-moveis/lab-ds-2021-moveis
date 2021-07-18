@@ -88,4 +88,9 @@ public class ProductController {
         return "redirect:/internal/product";
     }
 
+    @GetMapping("remove/{id}")
+    public String remove(@PathVariable("id") Long id) {
+        productService.delete(id);
+        return "redirect:/internal/product";
+    }
 }

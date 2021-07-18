@@ -24,9 +24,9 @@
                 Adicionar novo produto
             </a>
         </div>
-        <div th:switch="${products}">
-            <h2 th:case="null">Ainda nenhum produto!</h2>
-            <div th:case="*">
+        <div th:switch="${products.isEmpty()}">
+            <h2 th:case="true">Ainda nenhum produto!</h2>
+            <div th:case="false">
                 <table class="table is-striped is-hoverable is-fullwidth">
                     <thead>
                     <tr>

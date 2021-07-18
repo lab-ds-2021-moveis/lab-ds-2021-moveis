@@ -100,13 +100,24 @@
                 </div>
             </div>
 
-            <div class="buttons">
-                <button class="button is-link" type="submit">
-                    Atualizar
-                </button>
-                <a th:href="@{/internal/product}" class="button">
-                    Cancelar
-                </a>
+            <div class="columns">
+                <div class="column">
+                    <div class="buttons">
+                        <button class="button is-link" type="submit">
+                            Atualizar
+                        </button>
+                        <a th:href="@{/internal/product}" class="button">
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="buttons is-right">
+                        <a th:href="@{/internal/product/remove/{id}(id=${product.id})}" class="button is-danger">
+                            Deletar
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <ul th:if="${#fields.hasErrors('*')}">
