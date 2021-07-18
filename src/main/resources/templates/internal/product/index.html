@@ -33,6 +33,7 @@
                         <th>#</th>
                         <th>Nome</th>
                         <th>Valor</th>
+                        <th>Ambiente</th>
                         <th>Fabricante</th>
                         <th>Modelo</th>
                     </tr>
@@ -44,6 +45,7 @@
                             <a th:href="@{/internal/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
                         </td>
                         <td th:text="${product.value}"></td>
+                        <td th:text="${product.environment}"></td>
                         <td th:text="${product.manufacturer}"></td>
                         <td th:text="${product.model}"></td>
                     </tr>

@@ -80,6 +80,9 @@
                 <button class="button is-link" type="submit">
                     Add
                 </button>
+                <a th:href="@{/internal/employee}" class="button">
+                    Cancelar
+                </a>
             </div>
         
             <ul th:if="${#fields.hasErrors('*')}">

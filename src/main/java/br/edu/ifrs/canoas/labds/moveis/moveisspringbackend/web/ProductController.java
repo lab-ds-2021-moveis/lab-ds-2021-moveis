@@ -2,8 +2,10 @@ package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.StoreProductDTO;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.UpdateProductDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.validation.StoreProductDTOValidator;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.validation.UpdateProductDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class ProductController {
 
     @Autowired
     private StoreProductDTOValidator storeProductDTOValidator;
+
+    @Autowired
+    private UpdateProductDTOValidator updateProductDTOValidator;
 
     @GetMapping
     public String list(Model model) {
@@ -48,15 +53,39 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
-        Optional<Product> result = productService.find(id);
+    public String showEditForm(@ModelAttribute("id") Product product, Model model) {
+        if (product == null) {
+            return "redirect:/internal/product";
+        }
+
+        UpdateProductDTO dto = new UpdateProductDTO().from(product);
+
+        model.addAttribute("product", product);
+        model.addAttribute("dto", dto);
+
+        return "internal/product/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(@ModelAttribute("dto") UpdateProductDTO dto, BindingResult bindingResult, Model model) {
+        Optional<Product> result = productService.find(dto.id);
 
         if (result.isEmpty()) {
             return "redirect:/internal/product";
         }
 
+        // Precisa disso pra mostrar o nome original do produto
         model.addAttribute("product", result.get());
-        return "/internal/product/show";
+
+        updateProductDTOValidator.validate(dto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "internal/product/edit";
+        }
+
+        productService.save(dto.toEntity());
+
+        return "redirect:/internal/product";
     }
 
 }

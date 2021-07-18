@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html
-    xmlns:th="http://www.thymeleaf.org"
-    th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
 >
 <head>
-    <title>Adicionar novo produto</title>
+    <title th:text="@{|Atualizar ${product.name}|}"></title>
 </head>
 <body>
     <main>
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-              <li><a th:href="@{/internal}">Funcionários</a></li>
-              <li><a th:href="@{/internal/product}">Produtos</a></li>
+                <li><a th:href="@{/internal}">Funcionários</a></li>
+                <li><a th:href="@{/internal/product}">Produtos</a></li>
                 <li class="is-active">
-                    <a th:href="@{/internal/product/add}" aria-current="page">Adicionar</a>
+                    <a th:href="@{/internal/product/add}" aria-current="page" th:text="@{|Atualizar ${product.name}|}"></a>
                 </li>
             </ul>
         </nav>
-        <h1 class="title">
-            Adicionar novo produto
-        </h1>
-        <form th:action="@{/internal/product/add}" method="post" th:object="${dto}">
+        <h1 class="title" th:text="@{|Atualizar ${product.name}|}"></h1>
+        <form th:action="@{/internal/product/edit}" method="post" th:object="${dto}">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" th:field="*{id}">
 
             <div class="columns">
                 <div class="column">
@@ -100,16 +99,16 @@
                     </textarea>
                 </div>
             </div>
-        
+
             <div class="buttons">
                 <button class="button is-link" type="submit">
-                    Adicionar
+                    Atualizar
                 </button>
                 <a th:href="@{/internal/product}" class="button">
                     Cancelar
                 </a>
             </div>
-        
+
             <ul th:if="${#fields.hasErrors('*')}">
                 <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
             </ul>
