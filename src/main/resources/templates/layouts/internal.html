@@ -14,15 +14,22 @@
                 </a>
             </div>
             <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a th:href="@{/internal}" class="button is-light">
-                            Funcionários
+                <div 
+                    sec:authorize="isAuthenticated()" 
+                    class="navbar-item has-dropdown is-hoverable"
+                >
+                    <a class="navbar-link">
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <div class="navbar-dropdown is-right">
+                        <a href="#" class="navbar-item">
+                            Minha conta
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a class="navbar-item" onclick="document.forms.logoutForm.submit()">
+                            Finalizar sessão
                         </a>
                         <form id="logoutForm" method="POST" th:action="@{/logout}">
-                            <button type="submit" class="button is-light">
-                                Logout
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -35,17 +42,19 @@
             <aside class="menu">
                 <p class="menu-label">Geral</p>
                 <ul class="menu-list">
-                    <li><a th:href="@{/internal}">Página de funcionários</a></li>
+                    <li><a th:href="@{/internal}">Painel de funcionários</a></li>
                 </ul>
                 <p class="menu-label">Administração</p>
                 <ul class="menu-list">
                     <li><a th:href="@{/internal/employee}">Funcionários</a></li>
-                    <li><a th:href="@{/internal/employee/add}">Adicionar funcionário</a></li>
+                    <li><a href="#">Estatísticas</a></li>
                 </ul>
                 <p class="menu-label">Produtos</p>
                 <ul class="menu-list">
-                    <li><a th:href="@{/internal/product}">Produtos</a></li>
-                    <li><a th:href="@{/internal/product/add}">Adicionar produto</a></li>
+                    <li><a th:href="@{/internal/product}">Lista de produtos</a></li>
+                    <li><a href="#">Registro de vendas</a></li>
+                    <li><a href="#">Registro de estoque</a></li>
+                    <li><a href="#">Montagens agendadas</a></li>
                 </ul>
             </aside>
         </div>
@@ -59,7 +68,12 @@
         
     <footer class="footer">
         <div class="content has-text-centered">
-            <p>&copy; 2021 Loja de móveis</p>
+            <p>
+                <a sec:authorize="isAuthenticated()" th:href="@{/internal/}">Painel de funcionários</a>
+            </p>
+            <p>
+                &copy; 2021 Loja de móveis
+            </p>
         </div>
     </footer>
 </body>

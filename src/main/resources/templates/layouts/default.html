@@ -14,15 +14,25 @@
                 </a>
             </div>
             <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a th:href="@{/internal}" class="button is-light">
-                            Staff
+                <div 
+                    sec:authorize="isAuthenticated()" 
+                    class="navbar-item has-dropdown is-hoverable"
+                >
+                    <a class="navbar-link">
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <div class="navbar-dropdown is-right">
+                        <a href="#" class="navbar-item">
+                            Carrinho de compras
+                        </a>
+                        <a class="navbar-item">
+                            Histórico de compras
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a class="navbar-item" onclick="document.forms.logoutForm.submit()">
+                            Finalizar sessão
                         </a>
                         <form id="logoutForm" method="POST" th:action="@{/logout}">
-                            <button type="submit" class="button is-light">
-                                Logout
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -36,7 +46,12 @@
 
     <footer class="footer">
         <div class="content has-text-centered">
-            <p>&copy; 2021 Loja de móveis</p>
+            <p>
+                <a sec:authorize="isAuthenticated()" th:href="@{/internal/}">Painel de funcionários</a>
+            </p>
+            <p>
+                &copy; 2021 Loja de móveis
+            </p>
         </div>
     </footer>
 </body>
