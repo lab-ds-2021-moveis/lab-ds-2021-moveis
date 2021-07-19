@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Lista de produtos</title>
+</head>
+<body>
+    <main>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a th:href="@{/internal}">Funcionários</a></li>
+                <li class="is-active">
+                    <a th:href="@{/internal/product}">Produtos</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="title">
+            Lista de produtos
+        </h1>
+        <div class="buttons">
+            <a class="button is-link" th:href="@{/internal/product/add}">
+                Adicionar novo produto
+            </a>
+        </div>
+        <div th:switch="${products.isEmpty()}">
+            <h2 th:case="true">Ainda nenhum produto!</h2>
+            <div th:case="false">
+                <table class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                        <th>Ambiente</th>
+                        <th>Fabricante</th>
+                        <th>Modelo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td>
+                            <a th:href="@{/internal/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                        </td>
+                        <td th:text="${product.value}"></td>
+                        <td th:text="${product.environment}"></td>
+                        <td th:text="${product.manufacturer}"></td>
+                        <td th:text="${product.model}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
