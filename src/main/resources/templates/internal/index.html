@@ -4,16 +4,13 @@
     th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
 >
 <head>
-    <title>Internal</title>
+    <title>Painel de funcionários</title>
 </head>
 <body>
     <main>
-        <h2>
-            Employees homepage
-        </h2>
-        <form id="logoutForm" method="POST" th:action="@{/logout}">
-            <input type="submit" value="Logout">
-        </form>
+        <h1>
+            Painel de funcionários
+        </h1>
     </main>
 </body>
 </html>

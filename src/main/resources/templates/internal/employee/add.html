@@ -4,54 +4,54 @@
     th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
 >
 <head>
-    <title>Add new employee</title>
+    <title>Adicionar novo funcionário</title>
 </head>
 <body>
     <main>
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a th:href="@{/internal}">Staff</a></li>
-                <li><a th:href="@{/internal/employee}">Employees</a></li>
+                <li><a th:href="@{/internal}">Funcionários</a></li>
+                <li><a th:href="@{/internal/employee}">Funcionários</a></li>
                 <li class="is-active">
-                    <a th:href="@{/internal/employee/add}" aria-current="page">Add</a>
+                    <a th:href="@{/internal/employee/add}" aria-current="page">Adicionar</a>
                 </li>
             </ul>
         </nav>
         <h1 class="title">
-            Add new employee
+            Adicionar novo funcionário
         </h1>
         <form th:action="@{/internal/employee/add}" method="post" th:object="${employeeForm}">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
             <div class="field">
-                <label for="fieldCredential" class="label">Credential</label>
+                <label for="fieldCredential" class="label">Credencial</label>
                 <div class="control">
                     <input id="fieldCredential" class="input" type="text" th:field="*{credential}">
                 </div>
             </div>
 
             <div class="field">
-                <label for="fieldName" class="label">Name</label>
+                <label for="fieldName" class="label">Nome</label>
                 <div class="control">
                     <input id="fieldName" class="input" type="text" th:field="*{name}">
                 </div>
             </div>
 
             <div class="field">
-                <label for="fieldRole" class="label">Role</label>
+                <label for="fieldRole" class="label">Cargo</label>
                 <div class="control">
                     <div class="select">
                         <select id="fieldRole" th:field="*{role}">
-                            <option th:value="'MANAGEMENT'" th:text="Management"></option>
-                            <option th:value="'STOCK'" th:text="Stock"></option>
-                            <option th:value="'SALES'" th:text="Sales"></option>
+                            <option th:value="'MANAGEMENT'" th:text="Gerencia"></option>
+                            <option th:value="'STOCK'" th:text="Estoque"></option>
+                            <option th:value="'SALES'" th:text="Vendas"></option>
                         </select>
                     </div>
                 </div>
             </div>
         
             <div class="field">
-                <label for="fieldPassword" class="label">Password</label>
+                <label for="fieldPassword" class="label">Senha</label>
                 <div class="control">
                     <input
                         id="fieldPassword"
@@ -64,7 +64,7 @@
             </div>
 
             <div class="field">
-                <label for="fieldPasswordConfirm" class="label">Confirm Password</label>
+                <label for="fieldPasswordConfirm" class="label">Confirmar senha</label>
                 <div class="control">
                     <input
                         id="fieldPasswordConfirm"
@@ -78,7 +78,7 @@
         
             <div class="buttons">
                 <button class="button is-link" type="submit">
-                    Add
+                    Adicionar
                 </button>
                 <a th:href="@{/internal/employee}" class="button">
                     Cancelar

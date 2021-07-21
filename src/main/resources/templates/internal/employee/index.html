@@ -4,36 +4,36 @@
     th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
 >
 <head>
-    <title>Employees list</title>
+    <title>Lista de funcionários</title>
 </head>
 <body>
     <main>
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a th:href="@{/internal}">Staff</a></li>
+                <li><a th:href="@{/internal}">Funcionários</a></li>
                 <li class="is-active">
-                    <a th:href="@{/internal/employee}">Employees</a>
+                    <a th:href="@{/internal/employee}">Funcionários</a>
                 </li>
             </ul>
         </nav>
         <h1 class="title">
-            Employees list
+            Lista de funcionários
         </h1>
         <div class="buttons">
             <a class="button is-link" th:href="@{/internal/employee/add}">
-                Add new employee
+                Lista de funcionários
             </a>
         </div>
         <div th:switch="${employees}">
-            <h2 th:case="null">No employees yet!</h2>
+            <h2 th:case="null">Ainda nenhum funcionário!</h2>
             <div th:case="*">
                 <table class="table is-striped is-hoverable is-fullwidth">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Credential</th>
-                        <th>Role</th>
+                        <th>Nome</th>
+                        <th>Credencial</th>
+                        <th>Cargo</th>
                     </tr>
                     </thead>
                     <tbody>
