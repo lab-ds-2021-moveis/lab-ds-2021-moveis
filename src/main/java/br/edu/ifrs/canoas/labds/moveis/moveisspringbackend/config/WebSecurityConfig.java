@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/styles/**", "/scripts/**", "/register").permitAll()
+                .antMatchers("/styles/**", "/scripts/**", "/register", "/shop/**", "/").permitAll()
                 .antMatchers("/internal/**").hasAnyAuthority(
                     EmployeeRole.MANAGEMENT.toString(),
                     EmployeeRole.SALES.toString(),
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/welcome",true)
+                .defaultSuccessUrl("/shop",true)
                 .permitAll()
                 .and()
             .logout()

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class CustomerController {
+public class AuthController {
 
     @Autowired
     private CustomerService customerService;
@@ -59,16 +59,5 @@ public class CustomerController {
             model.addAttribute("message", "You have been logged out successfully.");
 
         return "login";
-    }
-
-    @GetMapping({"/", "/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
-    }
-
-    @GetMapping("/customers")
-    public String showCustomerList(Model model) {
-        model.addAttribute("customers", customerService.findAll());
-        return "customers";
     }
 }

@@ -4,7 +4,7 @@
     th:replace="layouts/default :: layout(~{::title}, ~{::main})"
 >
 <head>
-    <title>Create an account</title>
+    <title>Criar uma conta</title>
 </head>
 <body>
     <main class="content">
@@ -12,7 +12,7 @@
             <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">
-                        Register
+                        Registrar
                     </p>
                 </header>
                 <div class="card-content">
@@ -21,7 +21,7 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                             <div class="field">
-                                <label for="fieldName" class="label">Name</label>
+                                <label for="fieldName" class="label">Nome</label>
                                 <div class="control">
                                     <input id="fieldName" class="input" type="text" th:field="*{name}">
                                 </div>
@@ -42,21 +42,21 @@
                             </div>
 
                             <div class="field">
-                                <label for="fieldPhone" class="label">Phone</label>
+                                <label for="fieldPhone" class="label">Telefone</label>
                                 <div class="control">
                                     <input id="fieldPhone" class="input" type="text" th:field="*{phone}">
                                 </div>
                             </div>
 
                             <div class="field">
-                                <label for="fieldPassword" class="label">Password</label>
+                                <label for="fieldPassword" class="label">Senha</label>
                                 <div class="control">
                                     <input id="fieldPassword" class="input" type="password" th:field="*{password}">
                                 </div>
                             </div>
 
                             <div class="field">
-                                <label for="fieldPasswordConfirm" class="label">Confirm Password</label>
+                                <label for="fieldPasswordConfirm" class="label">Confirmar senha</label>
                                 <div class="control">
                                     <input id="fieldPasswordConfirm" class="input" type="password" th:field="*{passwordConfirm}">
                                 </div>
@@ -64,11 +64,11 @@
 
                             <div class="buttons">
                                 <button class="button is-link" type="submit">
-                                    Register
+                                    Registrar
                                 </button>
                             </div>
 
-                            <a th:href="@{/login}">Log In</a>
+                            <a th:href="@{/login}">Logar-se</a>
 
                             <ul th:if="${#fields.hasErrors('*')}">
                                 <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>

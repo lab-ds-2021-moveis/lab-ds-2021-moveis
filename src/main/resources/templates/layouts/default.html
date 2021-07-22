@@ -10,12 +10,15 @@
         <div class="navbar-menu">
             <div class="navbar-start">
                 <a th:href="@{/}" class="navbar-item">
-                    Home
+                    Loja de Móveis
                 </a>
             </div>
-            <div class="navbar-end">
+            <div
+                th:switch="${#authorization.expression('isAuthenticated()')}"
+                class="navbar-end"
+            >
                 <div 
-                    sec:authorize="isAuthenticated()" 
+                    th:case="true"
                     class="navbar-item has-dropdown is-hoverable"
                 >
                     <a class="navbar-link">
@@ -36,12 +39,19 @@
                         </form>
                     </div>
                 </div>
+                <a
+                    th:case="*"
+                    class="navbar-item"
+                    th:href="@{/login}"
+                >
+                    Login
+                </a>
             </div>
         </div>
     </nav>
 
     <main th:replace="${content}">
-        <p>Layout contents</p>
+        <p>Conteúdo</p>
     </main>
 
     <footer class="footer">

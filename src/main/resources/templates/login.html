@@ -21,14 +21,14 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                             <div class="field">
-                                <label for="fieldEmail" class="label">Login (e-mail or credential)</label>
+                                <label for="fieldEmail" class="label">Login (e-mail ou credencial)</label>
                                 <div class="control">
                                     <input id="fieldEmail" class="input" name="username" type="text" autofocus>
                                 </div>
                             </div>
 
                             <div class="field">
-                                <label for="fieldPassword" class="label">Password</label>
+                                <label for="fieldPassword" class="label">Senha</label>
                                 <div class="control">
                                     <input id="fieldPassword" class="input" name="password" type="password">
                                 </div>
@@ -43,7 +43,7 @@
                             <span th:text="${message}"></span>
                             <span th:text="${error}"></span>
 
-                            <a th:href="@{/register}">Create an account</a>
+                            <a th:href="@{/register}">Criar uma conta</a>
                         </form>
                     </div>
                 </div>
