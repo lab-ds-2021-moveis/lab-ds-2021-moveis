@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title th:text="${product.name}">Loja de móveis</title>
+</head>
+<body>
+    <main class="mx-4">
+        <div class="container is-max-desktop mb-4">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a th:href="@{/shop}">Loja de móveis</a></li>
+                    <li class="is-active">  
+                        <a th:href="@{/shop/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                    </li>
+                </ul>
+            </nav>
+            <h1 class="title" th:text="${product.name}"></h1>
+            <div class="columns">
+                <div class="column">
+                    <figure class="image is-square">
+                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="column">
+                    <p class="subtitle is-1">
+                        <span>R$</span>
+                        <span th:text="${product.value}"></span>
+                        <span>cada</span>
+                    </p>
+                    <table class="table is-striped is-hoverable is-fullwidth">
+                        <tbody>
+                            <tr>
+                                <th>Fabricante</th>
+                                <td th:text="${product.manufacturer}"></td>
+                            </tr>
+                            <tr>
+                                <th>Modelo</th>
+                                <td th:text="${product.model}"></td>
+                            </tr>
+                            <tr>
+                                <th>Descrição</th>
+                                <td th:switch="${product.description.length()}">
+                                    <span th:case="0">Sem descrição</span>
+                                    <span th:case="*" th:text="${product.description}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="level">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <p class="subtitle is-5 pl-3">
+                                    Comprar:
+                                </p>
+                            </div>
+                            <div class="level-item">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <input class="input" value="1" type="number" style="width: 5em" min="1" max="999">
+                                    </div>
+                                    <div class="control">
+                                        <a class="button is-link">Comprar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

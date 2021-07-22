@@ -7,7 +7,7 @@
     <title>Loja de móveis</title>
 </head>
 <body>
-    <main class="mx-2">
+    <main class="mx-4">
         <div class="container is-max-desktop">
             <div class="column columns is-mobile is-centered">
                 <h1 class="title is-1" style="position: relative; bottom: .6em; z-index: 50;">
@@ -42,7 +42,7 @@
                                 </p>
                             </div>
                             <footer class="card-footer">
-                                <a href="#" class="card-footer-item">Visualizar</a>
+                                <a th:href="@{/shop/product/{id}(id=${product.id})}" class="card-footer-item">Visualizar</a>
                                 <a href="#" class="card-footer-item">Comprar</a>
                             </footer>
                         </div>

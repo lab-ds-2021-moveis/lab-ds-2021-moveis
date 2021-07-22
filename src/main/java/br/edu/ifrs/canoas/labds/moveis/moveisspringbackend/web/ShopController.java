@@ -1,10 +1,12 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * Every route is public
  *
- * TODO: Implement list product route
- * TODO: Implement product view route
  */
 @Controller
 public class ShopController {
@@ -25,5 +25,14 @@ public class ShopController {
     public String shopHome(Model model) {
         model.addAttribute("products", productService.findAll());
         return "shop/home";
+    }
+
+    @GetMapping("/shop/product/{id}")
+    public String viewProduct(@ModelAttribute("id") Product product, Model model) {
+        if (product == null) {
+            return "redirect:/shop";
+        }
+        model.addAttribute("product", product);
+        return "shop/product";
     }
 }
