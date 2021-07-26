@@ -41,6 +41,9 @@ public class Product {
     @Column(name = "modelo", nullable = true)
     private String model;
 
+    @Column(name = "imagem", nullable = true)
+    private String image;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_ambiente", nullable = false)
     private ProductEnvironment environment;

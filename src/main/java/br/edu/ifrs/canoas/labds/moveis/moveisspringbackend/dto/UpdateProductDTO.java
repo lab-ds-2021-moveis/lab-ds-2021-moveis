@@ -13,6 +13,7 @@ public class UpdateProductDTO implements UpdateEntityDTO<Product> {
     public String description;
     public String manufacturer;
     public String model;
+    public String image;
     public String environment;
 
     @Override
@@ -25,6 +26,7 @@ public class UpdateProductDTO implements UpdateEntityDTO<Product> {
         instance.setDescription(description);
         instance.setManufacturer(manufacturer);
         instance.setModel(model);
+        instance.setImage(image);
         instance.setEnvironment(ProductEnvironment.valueOf(environment));
 
         return instance;
@@ -38,6 +40,7 @@ public class UpdateProductDTO implements UpdateEntityDTO<Product> {
         description = product.getDescription();
         manufacturer = product.getManufacturer();
         model = product.getModel();
+        image = product.getImage();
         environment = product.getEnvironment().toString();
         return this;
     }
