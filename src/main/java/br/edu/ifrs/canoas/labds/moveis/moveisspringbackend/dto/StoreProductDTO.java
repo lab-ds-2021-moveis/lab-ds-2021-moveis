@@ -13,6 +13,7 @@ public class StoreProductDTO implements EntityDTO<Product> {
     public String manufacturer;
     public String model;
     public String environment;
+    public String image;
 
     @Override
     public Product toEntity() {
@@ -23,6 +24,7 @@ public class StoreProductDTO implements EntityDTO<Product> {
         instance.setDescription(description);
         instance.setManufacturer(manufacturer);
         instance.setModel(model);
+        instance.setImage(image);
         instance.setEnvironment(ProductEnvironment.valueOf(environment));
 
         return instance;
