@@ -58,14 +58,25 @@
                                 </p>
                             </div>
                             <div class="level-item">
-                                <div class="field has-addons">
-                                    <div class="control">
-                                        <input class="input" value="1" type="number" style="width: 5em" min="1" max="999">
+                                <form th:action="@{/shop/cart/add}" method="post" th:object="${dto}">
+                                    <input type="hidden" th:field="*{id}">
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <input
+                                                class="input"
+                                                value="1"
+                                                type="number"
+                                                style="width: 5em"
+                                                min="1"
+                                                max="999"
+                                                th:field="*{amount}"
+                                            >
+                                        </div>
+                                        <div class="control">
+                                            <button type="submit" class="button is-link">Comprar</button>
+                                        </div>
                                     </div>
-                                    <div class="control">
-                                        <a class="button is-link">Comprar</a>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

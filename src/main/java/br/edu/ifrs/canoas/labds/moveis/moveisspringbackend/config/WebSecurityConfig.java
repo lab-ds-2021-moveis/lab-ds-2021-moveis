@@ -1,5 +1,6 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.config;
 
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Customer;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.enumeration.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/styles/**", "/scripts/**", "/register", "/shop/**", "/").permitAll()
+                .antMatchers("/styles/**", "/scripts/**", "/register", "/", "/shop/**").permitAll()
                 .antMatchers("/internal/**").hasAnyAuthority(
                     EmployeeRole.MANAGEMENT.toString(),
                     EmployeeRole.SALES.toString(),

@@ -1,6 +1,7 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.AddCartItemDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,13 @@ public class ShopController {
         if (product == null) {
             return "redirect:/shop";
         }
+
+        AddCartItemDTO addCartItemDTO = new AddCartItemDTO();
+        addCartItemDTO.id = product.getId();
+
         model.addAttribute("product", product);
+        model.addAttribute("dto", addCartItemDTO);
+
         return "shop/product";
     }
 }
