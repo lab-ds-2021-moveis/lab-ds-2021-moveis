@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Loja de móveis</title>
+</head>
+<body>
+    <main class="mx-4">
+        <div class="container is-max-desktop mb-4">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a th:href="@{/shop}">Loja de móveis</a></li>
+                    <li class="is-active">  
+                        <a th:href="@{/shop/cart}">Carrinho de compras</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h1 class="title">Carrinho de compras</h1>
+
+            <div class="columns">
+                <div class="column is-two-thirds">
+                    <h2 class="title is-4">Itens</h2>
+                    <div th:switch="${session.cart.list.size()}">
+                        <div
+                            th:case="0"
+                            class="notification"
+                        >
+                            Você ainda não adicionou nada no seu carrinho. <a th:href="@{/shop}">Acesse a loja para comprar algo.</a>
+                        </div>
+                        <table
+                            th:case="*"
+                            class="table is-striped is-hoverable is-fullwidth"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${session.cart.list}">
+                                    <td>
+                                        <a th:href="@{/shop/product/{id}(id=${item.id})}" th:text="${item.name}"></a>
+                                    </td>
+                                    <td th:text="${item.amount}"></td>
+                                    <td>
+                                        <span>R$</span>
+                                        <span th:text="${item.price}"></span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/shop/cart/remove/{id}(id=${item.id})}">Remover</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="column">
+                    <h2 class="title is-4">Total</h2>
+                    <div class="card">
+                        <div class="card-content">
+                            <!-- Informações do carrinho em si -->
+                            <strong>Total:</strong>
+                            <span>R$</span>
+                            <span th:text="${session.cart.total}"></span>
+                            <hr>
+                            <!--  -->
+                            <label class="checkbox">
+                                <input type="checkbox">
+                                Incluir montagem
+                            </label>
+                        </div>
+                        <div class="card-footer">
+                            <a class="card-footer-item">
+                                <button class="button is-fullwidth is-link">Comprar</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a th:href="@{/shop/cart/clear}">Limpar carrinho de compras</a>
+        </div>
+    </main>
+</body>

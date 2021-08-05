@@ -14,6 +14,7 @@
                     Loja de móveis
                 </h1>
             </div>
+            <span th:text="${session.shoppingCart}"></span>
             <div th:switch="${products.isEmpty()}">
                 <h2 th:case="true">Ainda nenhum produto!</h2>
                 <div
@@ -44,7 +45,50 @@
                             </div>
                             <footer class="card-footer">
                                 <a th:href="@{/shop/product/{id}(id=${product.id})}" class="card-footer-item">Visualizar</a>
-                                <a href="#" class="card-footer-item">Comprar</a>
+                                <div class="card-footer-item">
+                                    <div class="dropdown is-hoverable">
+                                        <div class="dropdown-trigger">
+                                            <a aria-haspopup="true" th:aria-controls="|dropdown-comprar-${product.id}|">
+                                                Comprar
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-menu" th:id="|dropdown-comprar-${product.id}|" role="menu">
+                                            <form th:action="@{/shop/cart/add}" method="post">
+                                                <input type="hidden" name="id" th:value="${product.id}">
+                                                <div class="dropdown-content">
+                                                    <div th:if="${session.cart != null && session.cart.has(product.id)}" class="dropdown-item">
+                                                        <p>
+                                                            <span>Este item já está em seu</span>
+                                                            <a th:href="@{/shop/cart}">carrinho</a>
+                                                            <span>!</span>
+                                                        </p>
+                                                        <p>
+                                                            Quantidade: <span th:text="${session.cart.get(product.id).amount}"></span> unidade(s)
+                                                        </p>
+                                                    </div>
+                                                    <div class="dropdown-item">
+                                                        <div class="field has-addons">
+                                                            <div class="control">
+                                                                <input
+                                                                    class="input"
+                                                                    value="1"
+                                                                    type="number"
+                                                                    style="width: 5em"
+                                                                    min="1"
+                                                                    max="999"
+                                                                    name="amount"
+                                                                >
+                                                            </div>
+                                                            <div class="control">
+                                                                <button type="submit" class="button is-link">Comprar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </footer>
                         </div>
                     </div>
