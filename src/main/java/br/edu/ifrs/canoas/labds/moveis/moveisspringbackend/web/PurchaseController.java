@@ -11,6 +11,7 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.SecurityServi
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/purchase")
 public class PurchaseController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class PurchaseController {
     @Autowired
     private SecurityService securityService;
 
-    @PostMapping("submit")
+    @PostMapping("/purchase/submit")
     public String submit (
             HttpSession session,
             @ModelAttribute("dto") SubmitPurchaseDTO dto
@@ -71,6 +71,12 @@ public class PurchaseController {
 
         // TODO: Mandar para a lista de compras
         return "redirect:/shop";
+    }
+
+    @GetMapping("/internal/purchases")
+    public String listAllPurchases(Model model) {
+        model.addAttribute("purchases", purchaseService.findAll());
+        return "/internal/purchases/index";
     }
 
 }
