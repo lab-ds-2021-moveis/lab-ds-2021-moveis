@@ -46,7 +46,7 @@
                         </td>
                         <td th:text="${purchase.customer.email}"></td>
                         <td>
-                            <a href="">Ver detalhes</a>
+                            <a th:href="@{/internal/purchases/{id}(id=${purchase.id})}">Ver detalhes</a>
                         </td>
                     </tr>
                     </tbody>

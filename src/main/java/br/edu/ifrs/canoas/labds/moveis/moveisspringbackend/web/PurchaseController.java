@@ -12,10 +12,7 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -74,9 +71,22 @@ public class PurchaseController {
     }
 
     @GetMapping("/internal/purchases")
-    public String listAllPurchases(Model model) {
+    public String internalListAllPurchases(Model model) {
         model.addAttribute("purchases", purchaseService.findAll());
         return "/internal/purchases/index";
+    }
+
+    @GetMapping("/internal/purchases/{id}")
+    public String internalGetPurchaseDetails(@PathVariable("id") Long id, Model model) {
+        Optional<Purchase> result = purchaseService.find(id);
+
+        if (result.isEmpty()) {
+            return "redirect:/internal/purchases";
+        }
+
+        model.addAttribute("purchase", result.get());
+
+        return "/internal/purchases/show";
     }
 
 }
