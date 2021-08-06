@@ -9,6 +9,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -38,6 +40,9 @@ public class Customer implements BaseEntity, Serializable {
 
     @Column(name = "senha")
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Purchase> purchases = new ArrayList<>();
 
     public static String role = "CUSTOMER";
 }

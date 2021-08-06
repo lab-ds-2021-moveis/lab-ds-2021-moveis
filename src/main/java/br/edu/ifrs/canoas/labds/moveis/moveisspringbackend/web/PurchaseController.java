@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +34,26 @@ public class PurchaseController {
     @Autowired
     private SecurityService securityService;
 
+    @GetMapping("/purchases")
+    public String getPurchaseHistory(Model model) {
+        List<Purchase> purchases = new ArrayList<>();
+        Class userClass = securityService.getCurrentUserClass();
+
+        if (userClass.equals(Employee.class)) {
+            Employee employee = (Employee) securityService.getCurrentUser();
+            purchases = employee.getPurchases();
+        }
+
+        if (userClass.equals(Customer.class)) {
+            Customer customer = (Customer) securityService.getCurrentUser();
+            purchases = customer.getPurchases();
+        }
+
+        model.addAttribute("purchases", purchases);
+
+        return "purchases";
+    }
+
     @PostMapping("/purchase/submit")
     public String submit (
             HttpSession session,
@@ -40,7 +62,7 @@ public class PurchaseController {
         Purchase purchase = null;
         ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
 
-        if (cart == null || cart.getList().isEmpty() || dto.customerId == null) {
+        if (cart == null || cart.getList().isEmpty()) {
             return "redirect:/shop/cart";
         }
 
@@ -53,6 +75,11 @@ public class PurchaseController {
         } else if (userClass.equals(Employee.class)) {
             // Cliente está comprando atraves de um funcionário
             Employee employee = (Employee) securityService.getCurrentUser();
+
+            if (dto.customerId == null) {
+                return "redirect:/shop/cart";
+            }
+
             Optional<Customer> result = customerService.find(dto.customerId);
             if (result.isPresent()) {
                 purchase = purchaseService.saveFromShoppingCart(cart, result.get(), employee);
@@ -66,8 +93,7 @@ public class PurchaseController {
             session.setAttribute(ShoppingCart.sessionKey, new ShoppingCart());
         }
 
-        // TODO: Mandar para a lista de compras
-        return "redirect:/shop";
+        return "redirect:/purchases";
     }
 
     @GetMapping("/internal/purchases")

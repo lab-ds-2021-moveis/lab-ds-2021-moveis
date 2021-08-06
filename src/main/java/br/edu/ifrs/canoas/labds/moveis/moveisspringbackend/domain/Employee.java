@@ -9,6 +9,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -35,5 +37,8 @@ public class Employee implements BaseEntity, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "cargo", nullable = false)
     private EmployeeRole role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<Purchase> purchases = new ArrayList<>();
 
 }
