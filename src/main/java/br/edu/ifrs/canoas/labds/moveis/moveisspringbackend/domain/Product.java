@@ -8,6 +8,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -47,5 +49,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_ambiente", nullable = false)
     private ProductEnvironment environment;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<ProductPurchase> productPurchases = new ArrayList<>();
 
 }

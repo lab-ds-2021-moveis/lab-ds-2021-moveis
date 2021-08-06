@@ -7,9 +7,14 @@
     <title>Erro</title>
 </head>
 <body>
-    <main>
-        <span th:text="${error}"></span>
-        <a th:href="@{/}">Homepage</a>
+    <main class="mx-4 mb-4">
+        <div class="container is-max-desktop mb-4">
+            <h1 class="title" th:text="${error}"></h1>
+            <div class="notification is-danger">
+                <span>Um erro acabou de acontecer!</span>
+                <a th:href="@{/}">Voltar para a página inicial.</a>
+            </div>
+        </div>
     </main>
 </body>
 </html>
