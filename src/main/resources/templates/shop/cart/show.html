@@ -69,6 +69,17 @@
                                 <strong>Total:</strong>
                                 <span>R$</span>
                                 <span th:text="${session.cart.total}"></span>
+                                <hr sec:authorize-url="/internal">
+                                <div sec:authorize-url="/internal" class="field">
+                                    <label for="selectCustomer" class="label">Selecione um comprador:</label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth is-multiple">
+                                            <select id="selectCustomer" th:field="*{customerId}" size="4" style="height: 7em;">
+                                                <option th:each="customer: ${customers}" th:value="${customer.id}" th:text="${customer.email}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
                                 <!--  -->
                                 <label class="checkbox">

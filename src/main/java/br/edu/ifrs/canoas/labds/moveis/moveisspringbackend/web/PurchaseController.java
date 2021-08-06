@@ -4,17 +4,20 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Customer;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Employee;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Purchase;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.SubmitPurchaseDTO;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.CustomerService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductPurchaseService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.PurchaseService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.SecurityService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/purchase")
@@ -27,6 +30,9 @@ public class PurchaseController {
     private ProductPurchaseService productPurchaseService;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     private SecurityService securityService;
 
     @PostMapping("submit")
@@ -37,6 +43,10 @@ public class PurchaseController {
         Purchase purchase = null;
         ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
 
+        if (cart == null || cart.getList().isEmpty() || dto.customerId == null) {
+            return "redirect:/shop/cart";
+        }
+
         Class userClass = securityService.getCurrentUserClass();
 
         if (userClass.equals(Customer.class)) {
@@ -46,14 +56,18 @@ public class PurchaseController {
         } else if (userClass.equals(Employee.class)) {
             // Cliente está comprando atraves de um funcionário
             Employee employee = (Employee) securityService.getCurrentUser();
-            // TODO: Pegar o cliente do dto e mandar pro saveFromShoppingCart
-            // purchase =
+            Optional<Customer> result = customerService.find(dto.customerId);
+            if (result.isPresent()) {
+                purchase = purchaseService.saveFromShoppingCart(cart, result.get(), employee);
+            }
         }
 
-        productPurchaseService.saveFromShoppingCart(cart, purchase);
+        if (purchase != null) {
+            productPurchaseService.saveFromShoppingCart(cart, purchase);
 
-        // Limpa o carrinho depois de processar a compra
-        session.setAttribute(ShoppingCart.sessionKey, new ShoppingCart());
+            // Limpa o carrinho depois de processar a compra
+            session.setAttribute(ShoppingCart.sessionKey, new ShoppingCart());
+        }
 
         // TODO: Mandar para a lista de compras
         return "redirect:/shop";

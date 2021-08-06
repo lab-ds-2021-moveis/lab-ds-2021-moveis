@@ -3,6 +3,7 @@ package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.AddCartItemDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.SubmitPurchaseDTO;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.CustomerService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.CartItem;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
@@ -22,6 +23,9 @@ public class ShoppingCartController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping
     public String show(HttpSession session, Model model) {
         ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
@@ -29,6 +33,7 @@ public class ShoppingCartController {
             cart = new ShoppingCart();
             session.setAttribute(ShoppingCart.sessionKey, cart);
         }
+        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("dto", new SubmitPurchaseDTO());
         return "shop/cart/show";
     }
