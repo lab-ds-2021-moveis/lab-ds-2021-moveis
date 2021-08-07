@@ -8,6 +8,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +18,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "produto")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Product {
+public class Product implements BaseEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -48,4 +51,6 @@ public class Product {
     @Column(name = "tipo_ambiente", nullable = false)
     private ProductEnvironment environment;
 
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "product")
+    private List <StockRequest> stockRequests = new ArrayList<>();
 }

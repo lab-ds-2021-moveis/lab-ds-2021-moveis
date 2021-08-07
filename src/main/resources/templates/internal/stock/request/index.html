@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Solicitações de estoque</title>
+</head>
+<body>
+<main>
+
+    <h1 class="title">
+        Solicitações de estoque
+    </h1>
+    <div class="buttons">
+        <a class="button is-link" th:href="@{/internal/stock/request/add}">
+            Adicionar nova solicitação de estoque
+        </a>
+    </div>
+
+    <div th:switch="${stockRequests.isEmpty()}">
+        <h2 th:case="true">Ainda nenhuma solicitação!</h2>
+        <div th:case="false">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Produto</th>
+                        <th>Data</th>
+                        <th>Quantidade</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="stock : ${stockRequests}">
+                    <td th:text="${stock.id}"></td>
+                    <td th:text="${stock.product.name}"></td>
+                    <td th:text="${#dates.format(stock.dateRequest, 'dd MMM yyyy')}"></td>
+                    <td th:text="${stock.amount}"></td>
+                    <td th:text="${stock.status}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
