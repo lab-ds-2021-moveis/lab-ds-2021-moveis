@@ -17,6 +17,7 @@ public class DashboardController {
     @GetMapping
     public String dashboard(Model model) {
         model.addAttribute("purchasesSumByDay", dashboardService.purchasesSumByDay());
+        model.addAttribute("purchaseSummary", dashboardService.getPurchaseSummary());
         return "internal/dashboard";
     }
 }

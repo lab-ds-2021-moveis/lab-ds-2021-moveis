@@ -2,6 +2,8 @@ package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.impl;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Purchase;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.chart.ChartTuple;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.chart.PurchaseSummary;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.repository.ProductPurchaseRepository;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.repository.PurchaseRepository;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private ProductPurchaseRepository productPurchaseRepository;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE.withZone(ZoneId.of("UTC-3"));
 
@@ -48,5 +53,14 @@ public class DashboardServiceImpl implements DashboardService {
         }
 
         return values;
+    }
+
+    @Override
+    public PurchaseSummary getPurchaseSummary() {
+        PurchaseSummary summary = new PurchaseSummary();
+        summary.setCount(purchaseRepository.count());
+        summary.setValue(purchaseRepository.getSumTotalValue());
+        summary.setProducts(productPurchaseRepository.getSumProductAmount());
+        return summary;
     }
 }

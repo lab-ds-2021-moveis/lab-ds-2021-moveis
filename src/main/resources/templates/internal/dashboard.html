@@ -19,6 +19,30 @@
         <h1 class="title pb-4">
             Estatísticas
         </h1>
+        <h2 class="subtitle">Resumo das vendas</h2>
+        <div class="columns">
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2" th:text="${purchaseSummary.count}"></div>
+                    <div class="subtitle">vendas efetuadas</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2">
+                        <span>R$</span>
+                        <span th:text="${purchaseSummary.value}"></span>
+                    </div>
+                    <div class="subtitle">recebidos</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2" th:text="${purchaseSummary.products}"></div>
+                    <div class="subtitle">produtos vendidos</div>
+                </div>
+            </div>
+        </div>
         <div class="columns">
             <div class="column">
                 <h2 class="subtitle">
