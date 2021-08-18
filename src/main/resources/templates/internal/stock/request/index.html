@@ -32,13 +32,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:each="stock : ${stockRequests}">
-                    <td th:text="${stock.id}"></td>
-                    <td th:text="${stock.product.name}"></td>
-                    <td th:text="${#dates.format(stock.dateRequest, 'dd MMM yyyy')}"></td>
-                    <td th:text="${stock.amount}"></td>
-                    <td th:text="${stock.status}"></td>
-                </tr>
+                    <tr th:each="stock : ${stockRequests}">
+                        <td>
+                            <a th:href="@{/internal/stock/request/{id}(id=${stock.id})}" th:text="${stock.id}"></a>
+                        </td>
+                        <td th:text="${stock.product.name}"></td>
+                        <td th:text="${#dates.format(stock.dateRequest, 'dd MMM yyyy')}"></td>
+                        <td th:text="${stock.amount}"></td>
+                        <td th:text="${stock.status}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

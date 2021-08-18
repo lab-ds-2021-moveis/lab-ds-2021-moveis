@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+  <title>Editar solicitação de estoque</title>
+</head>
+<body>
+
+<main>
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+      <li class="is-active">
+        <a th:href="@{/internal/stock/request/edit}" aria-current="page">Editar solicitação de estoque</a>
+      </li>
+    </ul>
+  </nav>
+  <h1 class="title">
+    Editar solicitação de estoque
+  </h1>
+
+  <form th:action="@{/internal/stock/request/edit}" method="post" th:object="${dto}">
+
+    <input type="hidden" th:field="*{id}">
+    <input id="fieldDate" class="input" type="hidden" th:field="*{dateRequest}">
+    <input id="fieldAmount" class="input" type="hidden" th:field="*{amount}">
+    <input id="fieldProduct" class="input" type="hidden" th:field="*{idProduct}">
+
+    <div class="field">
+      <label for="fieldStatus" class="label">Status da requisição</label>
+      <div class="control">
+        <label for="fieldCheckboxEncaminhada" class="radio">
+            <input id="fieldCheckboxEncaminhada" type="radio" th:value="'FORWARDED'" th:field="*{status}">
+          Encaminhado
+        </label>
+        <label for="fieldCheckboxFinalizada" class="radio">
+          <input id="fieldCheckboxFinalizada" type="radio" th:value="'FINISHED'" th:field="*{status}">
+          Finalizado
+        </label>
+        <label for="fieldCheckboxCancelada" class="radio">
+          <input id="fieldCheckboxCancelada" type="radio" th:value="'CANCELLED'" th:field="*{status}">
+          Cancelado
+        </label>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="button is-link" type="submit">
+        Atualizar
+      </button>
+      <a th:href="@{/internal}" class="button">
+        Cancelar
+      </a>
+    </div>
+
+    <ul th:if="${#fields.hasErrors('*')}">
+      <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+    </ul>
+  </form>
+</main>
+
+</body>
+</html>
