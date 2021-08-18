@@ -17,7 +17,7 @@
                 <div th:case="false">
                     <div th:each="purchase : ${purchases}" class="card mb-4">
                         <div class="card-content">
-                            <p class="title" th:text="${#dates.format(purchase.created_at, 'dd MMM yyyy')}"></p>
+                            <p class="title" th:text="${#dates.format(purchase.createdAt, 'dd MMM yyyy')}"></p>
                             <hr>
                             <ul>
                                 <li th:text="@{|ID: ${purchase.id}|}"></li>

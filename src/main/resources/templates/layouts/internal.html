@@ -4,6 +4,13 @@
     <meta charset="utf-8">
     <title th:replace="${title}">Loja de Móveis</title>
     <link rel="stylesheet" type="text/css" href="/styles/app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+    <script src="/scripts/locale/pt-br.js"></script>
+    <script type="javascript">
+        moment.locale('pt-br')
+    </script>
 </head>
 <body>
     <nav class="navbar is-light mb-4" role="navigation" aria-label="main navigation">
@@ -47,7 +54,7 @@
                 <p class="menu-label">Administração</p>
                 <ul class="menu-list">
                     <li><a th:href="@{/internal/employee}">Funcionários</a></li>
-                    <li><a href="#">Estatísticas</a></li>
+                    <li><a th:href="@{/internal/dashboard}">Estatísticas</a></li>
                 </ul>
                 <p class="menu-label">Produtos</p>
                 <ul class="menu-list">

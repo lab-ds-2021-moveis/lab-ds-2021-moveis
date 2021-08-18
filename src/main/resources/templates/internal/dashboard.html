@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Estatísticas</title>
+</head>
+<body>
+    <main id="main">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+                <li class="is-active">
+                  <a th:href="@{/internal/dashboard}">Estatísticas</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="title pb-4">
+            Estatísticas
+        </h1>
+        <h2 class="subtitle">Resumo das vendas</h2>
+        <div class="columns">
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2" th:text="${purchaseSummary.count}"></div>
+                    <div class="subtitle">vendas efetuadas</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2">
+                        <span>R$</span>
+                        <span th:text="${purchaseSummary.value}"></span>
+                    </div>
+                    <div class="subtitle">recebidos</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="notification is-secondary">
+                    <div class="title is-2" th:text="${purchaseSummary.products}"></div>
+                    <div class="subtitle">produtos vendidos</div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h2 class="subtitle">
+                    Gráfico de valor vendido por dia
+                </h2>
+                <canvas id="purchasesByDayChart" width="800" height="300"></canvas>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            const purchasesByDayChartCtx = document.getElementById('purchasesByDayChart').getContext('2d')
+            const purchasesSumByDay = [[${purchasesSumByDay}]]
+
+            // Do some post processing, just to be sure will be properly ordered
+            const values = purchasesSumByDay
+                .map((e) => {
+                    e.date = moment(e.label).unix()
+                    return e
+                })
+                .sort((a, b) => a.date - b.date)
+            
+            const labels = values.map(e => e.label)
+            const data = values.map(e => e.value)
+            
+            const purchasesByDayChartInstance = new Chart(purchasesByDayChartCtx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Valor',
+                        data,
+                        borderWidth: 4,
+                        borderColor: 'rgba(72, 95, 199, .75)'
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return 'R$ ' + value;
+                                }
+                            }
+                        }],
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                tooltipFormat: 'DD MMM, YYYY',
+                                displayFormats: {
+                                    day: 'DD MMM, YYYY'
+                                }
+
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+    </main>
+</body>
+</html>

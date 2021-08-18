@@ -15,9 +15,67 @@
                 </li>
             </ul>
         </nav>
-        <h1 class="title">
+        <h1 class="title pb-4">
             Painel de funcionários
         </h1>
+        <h2 class="subtitle">
+            Administração
+        </h2>
+        <div class="columns is-flex-tablet is-flex-wrap-wrap">
+            <a class="column is-4" th:href="@{/internal/employee}">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Funcionários</p>
+                    <p class="subtitle">
+                        Página de visualização e cadastro de funcionários
+                    </p>
+                </div>
+            </a>
+            <a class="column is-4" th:href="@{/internal/dashboard}">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Estatísticas</p>
+                    <p class="subtitle">
+                        Dashboard com dados estatísticos das vendas
+                    </p>
+                </div>
+            </a>
+        </div>
+        <h2 class="subtitle">
+            Produtos
+        </h2>
+        <div class="columns is-flex-tablet is-flex-wrap-wrap">
+            <a class="column is-4" th:href="@{/internal/product}">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Lista de produtos</p>
+                    <p class="subtitle">
+                        Página de gerenciamento de produtos
+                    </p>
+                </div>
+            </a>
+            <a class="column is-4" th:href="@{/internal/purchases}">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Registro de vendas</p>
+                    <p class="subtitle">
+                        Histórico e informações de todas vendas realizadas
+                    </p>
+                </div>
+            </a>
+            <a class="column is-4" href="#">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Registro de estoque</p>
+                    <p class="subtitle">
+                        Página para gerenciamento das entradas do estoque
+                    </p>
+                </div>
+            </a>
+            <a class="column is-4" href="#">
+                <div class="notification is-link is-light" style="height: 100%">
+                    <p class="title">Montagens agendadas</p>
+                    <p class="subtitle">
+                        Página para gerenciamento das montagens solicitadas e acesso ao histórico de montagens
+                    </p>
+                </div>
+            </a>
+        </div>
     </main>
 </body>
 </html>

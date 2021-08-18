@@ -42,9 +42,18 @@ public class Purchase implements BaseEntity, Serializable {
 
     @Column(name = "created_at")
     @CreatedDate
-    private Instant created_at = Instant.now();
+    private Instant createdAt = Instant.now();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchase")
     private List<ProductPurchase> productPurchases = new ArrayList<>();
+
+    public String toString() {
+        return "Purchase" +
+            "(" +
+                "id=" + id + ";" +
+                "totalValue=" + totalValue + ";" +
+                "createdAt=" + createdAt + ";" +
+            ")";
+    }
 
 }

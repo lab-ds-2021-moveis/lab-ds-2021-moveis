@@ -36,7 +36,7 @@
                     <tbody>
                     <tr th:each="purchase : ${purchases}">
                         <td th:text="${purchase.id}"></td>
-                        <td th:text="${#dates.format(purchase.created_at, 'dd MMM yyyy')}"></td>
+                        <td th:text="${#dates.format(purchase.createdAt, 'dd MMM yyyy')}"></td>
                         <td>
                             <span>R$</span>
                             <span th:text="${purchase.totalValue}"></span>
