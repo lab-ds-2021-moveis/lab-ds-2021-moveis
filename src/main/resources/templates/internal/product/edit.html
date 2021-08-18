@@ -13,7 +13,7 @@
                 <li><a th:href="@{/internal}">Painel de funcionários</a></li>
                 <li><a th:href="@{/internal/product}">Lista de produtos</a></li>
                 <li class="is-active">
-                    <a th:href="@{/internal/product/add}" aria-current="page" th:text="@{|Atualizar ${product.name}|}"></a>
+                    <a th:href="@{/internal/product/{id}(id=${product.id})}" aria-current="page" th:text="@{|Atualizar ${product.name}|}"></a>
                 </li>
             </ul>
         </nav>

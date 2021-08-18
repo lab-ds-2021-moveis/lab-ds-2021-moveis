@@ -62,25 +62,38 @@
                 </div>
                 <div class="column">
                     <h2 class="title is-4">Total</h2>
-                    <div class="card">
-                        <div class="card-content">
-                            <!-- Informações do carrinho em si -->
-                            <strong>Total:</strong>
-                            <span>R$</span>
-                            <span th:text="${session.cart.total}"></span>
-                            <hr>
-                            <!--  -->
-                            <label class="checkbox">
-                                <input type="checkbox">
-                                Incluir montagem
-                            </label>
+                    <form th:action="@{/purchase/submit}" method="post" th:object="${dto}">
+                        <div class="card">
+                            <div class="card-content">
+                                <!-- Informações do carrinho em si -->
+                                <strong>Total:</strong>
+                                <span>R$</span>
+                                <span th:text="${session.cart.total}"></span>
+                                <hr sec:authorize-url="/internal">
+                                <div sec:authorize-url="/internal" class="field">
+                                    <label for="selectCustomer" class="label">Selecione um comprador:</label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth is-multiple">
+                                            <select id="selectCustomer" th:field="*{customerId}" size="4" style="height: 7em;">
+                                                <option th:each="customer: ${customers}" th:value="${customer.id}" th:text="${customer.email}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!--  -->
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    Incluir montagem
+                                </label>
+                            </div>
+                            <div class="card-footer">
+                                <a class="card-footer-item">
+                                    <button type="submit" class="button is-fullwidth is-link">Comprar</button>
+                                </a>
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <a class="card-footer-item">
-                                <button class="button is-fullwidth is-link">Comprar</button>
-                            </a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <a th:href="@{/shop/cart/clear}">Limpar carrinho de compras</a>

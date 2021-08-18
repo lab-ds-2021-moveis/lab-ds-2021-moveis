@@ -14,7 +14,6 @@
                     Loja de móveis
                 </h1>
             </div>
-            <span th:text="${session.shoppingCart}"></span>
             <div th:switch="${products.isEmpty()}">
                 <h2 th:case="true">Ainda nenhum produto!</h2>
                 <div

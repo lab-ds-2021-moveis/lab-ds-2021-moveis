@@ -2,6 +2,8 @@ package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.AddCartItemDTO;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.SubmitPurchaseDTO;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.CustomerService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.CartItem;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
@@ -18,18 +20,21 @@ import java.util.Optional;
 @RequestMapping("/shop/cart")
 public class ShoppingCartController {
 
-    private static final String cartKey = "cart";
-
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping
     public String show(HttpSession session, Model model) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute(cartKey);
+        ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
         if (cart == null) {
             cart = new ShoppingCart();
-            session.setAttribute(cartKey, cart);
+            session.setAttribute(ShoppingCart.sessionKey, cart);
         }
+        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("dto", new SubmitPurchaseDTO());
         return "shop/cart/show";
     }
 
@@ -39,7 +44,7 @@ public class ShoppingCartController {
             HttpServletRequest request,
             @ModelAttribute("dto") AddCartItemDTO addCartItemDTO
     ) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute(cartKey);
+        ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
         if (cart == null) {
             cart = new ShoppingCart();
         }
@@ -59,33 +64,33 @@ public class ShoppingCartController {
 
         cart.add(cartItem);
 
-        session.setAttribute(cartKey, cart);
+        session.setAttribute(ShoppingCart.sessionKey, cart);
         return "redirect:/shop/cart/";
     }
 
     @GetMapping("remove/{id}")
     public String remove(HttpSession session, @PathVariable("id") Long id) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute(cartKey);
+        ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
         if (cart == null) {
             cart = new ShoppingCart();
         }
 
         cart.remove(id);
 
-        session.setAttribute(cartKey, cart);
+        session.setAttribute(ShoppingCart.sessionKey, cart);
         return "redirect:/shop/cart/";
     }
 
     @GetMapping("clear")
     public String clear(HttpSession session) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute(cartKey);
+        ShoppingCart cart = (ShoppingCart) session.getAttribute(ShoppingCart.sessionKey);
         if (cart == null) {
             cart = new ShoppingCart();
         }
 
         cart.clear();
 
-        session.setAttribute(cartKey, cart);
+        session.setAttribute(ShoppingCart.sessionKey, cart);
         return "redirect:/shop/cart/";
     }
 }

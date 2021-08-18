@@ -8,6 +8,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +18,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cliente")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Customer implements BaseEntity {
+public class Customer implements BaseEntity, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -37,6 +40,9 @@ public class Customer implements BaseEntity {
 
     @Column(name = "senha")
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Purchase> purchases = new ArrayList<>();
 
     public static String role = "CUSTOMER";
 }
