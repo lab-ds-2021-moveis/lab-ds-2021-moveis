@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 @Data
 @NoArgsConstructor
 public class ShoppingCart {
+
+    public static String sessionKey = "cart";
+
     private Map<Long, CartItem> items = new HashMap<>();
 
     public Double getTotal() {

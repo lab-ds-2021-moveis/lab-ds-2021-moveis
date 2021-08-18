@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/default :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Histórico de compras</title>
+</head>
+<body>
+    <main class="mx-4 mb-6">
+        <div class="container is-max-desktop">
+            <div class="column columns is-mobile is-centered">
+                <h1 class="title">Histórico de compras</h1>
+            </div>
+            <div th:switch="${purchases.isEmpty()}">
+                <h2 th:case="true">Ainda nenhuma compra!</h2>
+                <div th:case="false">
+                    <div th:each="purchase : ${purchases}" class="card mb-4">
+                        <div class="card-content">
+                            <p class="title" th:text="${#dates.format(purchase.created_at, 'dd MMM yyyy')}"></p>
+                            <hr>
+                            <ul>
+                                <li th:text="@{|ID: ${purchase.id}|}"></li>
+                                <li th:text="@{|Total: R$ ${purchase.totalValue}|}"></li>
+                                <li sec:authorize-url="/internal" th:text="@{|Comprado por ${purchase.customer.name} (${purchase.customer.email})|}"></li>
+                                <li th:if="${purchase.employee != null}" th:text="@{|Comprado com ajuda de ${purchase.employee.name}|}" th:title="${purchase.employee.credential}"></li>
+                            </ul>
+                            <hr>
+                            <h2 class="title is-5">Itens comprados: </h2>
+                            <ul>
+                                <li
+                                    th:each="productPurchase : ${purchase.productPurchases}"
+                                    th:with="value=${productPurchase.product.value * productPurchase.amount}"
+                                >
+                                    <span th:text="@{|${productPurchase.amount}x|}"></span>
+                                    <span th:text="${productPurchase.product.name}"></span>
+                                    <span th:text="@{|(R$ ${value})|}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

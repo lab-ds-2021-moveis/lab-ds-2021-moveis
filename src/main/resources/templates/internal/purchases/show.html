@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title th:text="@{|Detalhes da compra ${purchase.id}|}">Loja de móveis</title>
+</head>
+<body>
+    <main>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+                <li><a th:href="@{/internal/purchases}">Registro de vendas</a></li>
+                <li class="is-active">
+                    <a th:href="@{/internal/purchases/{id}(id=${purchase.id})}" th:text="@{|Detalhes da compra ${purchase.id}|}"></a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="title" th:text="@{|Detalhes da compra ${purchase.id}|}"></h1>
+        <table class="table is-striped is-hoverable">
+            <tr>
+                <th>Data da compra</th>
+                <td th:text="${#dates.format(purchase.created_at, 'dd MMM yyyy')}"></td>
+            </tr>
+            <tr>
+                <th>Valor total</th>
+                <td>
+                    <span>R$</span>
+                    <span th:text="${purchase.totalValue}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td th:text="${purchase.customer.email}"></td>
+            </tr>
+            <tr>
+                <th>Vendedor</th>
+                <td>
+                    <span th:if="${purchase.employee != null}" th:text="${purchase.employee.name}" th:title="${purchase.employee.credential}"></span>
+                    <span th:else>
+                        -
+                    </span>
+                </td>
+            </tr>
+        </table>
+        <div class="columns">
+            <div class="column">
+                <h2 class="title is-4">Itens comprados</h2>
+                <table class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Produto</th>
+                            <th>Valor unitário</th>
+                            <th>Quantidade</th>
+                            <th>Valor pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="productPurchase : ${purchase.productPurchases}">
+                            <td th:text="${productPurchase.product.id}"></td>
+                            <td th:text="${productPurchase.product.name}"></td>
+                            <td>
+                                <span>R$</span>
+                                <span th:text="${productPurchase.product.value}"></span>
+                            </td>
+                            <td th:text="${productPurchase.amount}"></td>
+                            <td th:with="value=${productPurchase.product.value * productPurchase.amount}">
+                                <span>R$</span>
+                                <span th:text="${value}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>

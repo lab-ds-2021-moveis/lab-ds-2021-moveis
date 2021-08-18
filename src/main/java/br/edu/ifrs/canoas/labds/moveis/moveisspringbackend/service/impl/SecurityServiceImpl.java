@@ -1,5 +1,9 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.impl;
 
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Customer;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Employee;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.repository.CustomerRepository;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.repository.EmployeeRepository;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +30,41 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Override
-    public String findLoggedInIdentifier() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
+    public String getLoggedInUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
+
+    @Override
+    public Object getCurrentUser() {
+        String username = getLoggedInUserName();
+        Class userClass = getCurrentUserClass();
+
+        if (userClass.equals(Customer.class)) {
+            return customerRepository.findByEmail(username);
+        }
+
+        if (userClass.equals(Employee.class)) {
+            return employeeRepository.findByCredential(username);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Class getCurrentUserClass() {
+        String username = getLoggedInUserName();
+        if (username != null) {
+            return username.contains("@") ? Customer.class : Employee.class;
         }
         return null;
     }

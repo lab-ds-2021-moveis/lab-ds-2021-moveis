@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Registro de vendas</title>
+</head>
+<body>
+    <main>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+                <li class="is-active">
+                    <a th:href="@{/internal/purchases}">Registro de vendas</a>
+                </li>
+            </ul>
+        </nav>
+        <h1 class="title">
+            Registro de vendas
+        </h1>
+        <div th:switch="${purchases.isEmpty()}">
+            <h2 th:case="true">Ainda nenhuma venda!</h2>
+            <div th:case="false">
+                <table class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th>Vendedor</th>
+                        <th>Cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="purchase : ${purchases}">
+                        <td th:text="${purchase.id}"></td>
+                        <td th:text="${#dates.format(purchase.created_at, 'dd MMM yyyy')}"></td>
+                        <td>
+                            <span>R$</span>
+                            <span th:text="${purchase.totalValue}"></span>
+                        </td>
+                        <td>
+                            <span th:if="${purchase.employee != null}" th:text="${purchase.employee.name}"></span>
+                        </td>
+                        <td th:text="${purchase.customer.email}"></td>
+                        <td>
+                            <a th:href="@{/internal/purchases/{id}(id=${purchase.id})}">Ver detalhes</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

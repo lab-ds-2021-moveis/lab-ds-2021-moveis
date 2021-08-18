@@ -53,4 +53,7 @@ public class Product implements BaseEntity, Serializable {
 
     @OneToMany (fetch = FetchType.LAZY, mappedBy = "product")
     private List <StockRequest> stockRequests = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    private List<ProductPurchase> productPurchases = new ArrayList<>();
 }
