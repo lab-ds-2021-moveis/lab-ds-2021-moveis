@@ -33,13 +33,24 @@
                 </thead>
                 <tbody>
                     <tr th:each="stock : ${stockRequests}">
-                        <td>
-                            <a th:href="@{/internal/stock/request/{id}(id=${stock.id})}" th:text="${stock.id}"></a>
-                        </td>
+                        <div th:switch="${#strings.toString(stock.status)}">
+                            <td th:case="'CANCELLED'" th:text="${stock.id}"></td>
+                            <td th:case="'FINISHED'"  th:text="${stock.id}"></td>
+                            <td th:case="*">
+                                <a th:href="@{/internal/stock/request/{id}(id=${stock.id})}" th:text="${stock.id}"></a>
+                            </td>
+                        </div>
+
                         <td th:text="${stock.product.name}"></td>
                         <td th:text="${#dates.format(stock.dateRequest, 'dd MMM yyyy')}"></td>
                         <td th:text="${stock.amount}"></td>
-                        <td th:text="${stock.status}"></td>
+                        <div th:switch="${#strings.toString(stock.status)}">
+                            <td th:case="'CANCELLED'">Cancelado</td>
+                            <td th:case="'FINISHED'">Finalizado</td>
+                            <td th:case="'WAITING'">Esperando</td>
+                            <td th:case="'FORWARDED'">Encaminhado</td>
+                            <td th:case="*">O</td>
+                        </div>
                     </tr>
                 </tbody>
             </table>
