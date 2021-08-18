@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Adicionar nova solicitação de estoque</title>
+</head>
+<body>
+
+<main>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+            <li class="is-active">
+                <a th:href="@{/internal/stock/request/add}" aria-current="page">Adicionar nova solicitação de estoque</a>
+            </li>
+        </ul>
+    </nav>
+    <h1 class="title">
+        Adicionar nova solicitação de estoque
+    </h1>
+
+    <form th:action="@{/internal/stock/request/add}" method="post" th:object="${dto}">
+
+        <div class="field">
+            <label for="fieldDate" class="label">Data</label>
+            <div class="control">
+                <input id="fieldDate" class="input" type="date" th:field="*{dateRequest}">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fieldAmount" class="label">Quantidade solicitada</label>
+            <div class="control">
+                <input id="fieldAmount" class="input" type="number" th:field="*{amount}" min="1">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fieldProduct" class="label">Produto</label>
+            <div class="control">
+                <div class="select is-fullwidth">
+                    <select id="fieldProduct" th:field="*{idProduct}">
+                        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="button is-link" type="submit">
+                Adicionar
+            </button>
+            <a th:href="@{/internal}" class="button">
+                Cancelar
+            </a>
+        </div>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+        </ul>
+    </form>
+</main>
+
+</body>
+</html>

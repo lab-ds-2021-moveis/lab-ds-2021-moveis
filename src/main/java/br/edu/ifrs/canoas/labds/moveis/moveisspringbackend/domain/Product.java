@@ -51,7 +51,9 @@ public class Product implements BaseEntity, Serializable {
     @Column(name = "tipo_ambiente", nullable = false)
     private ProductEnvironment environment;
 
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "product")
+    private List <StockRequest> stockRequests = new ArrayList<>();
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<ProductPurchase> productPurchases = new ArrayList<>();
-
 }
