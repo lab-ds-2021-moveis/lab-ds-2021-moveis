@@ -1,11 +1,14 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.web;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.Product;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.StockEntry;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.StockRequest;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.domain.enumeration.RequestStatus;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.StoreStockRequestDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.UpdateProductDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.dto.UpdateStockRequestDTO;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductService;
+import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.StockEntryService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.StockRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ public class StockRequestController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private StockEntryService stockEntryService;
 
     @GetMapping
     public String listStockRequests(Model model){
@@ -75,6 +81,13 @@ public class StockRequestController {
             return "redirect:/internal/stock/request/edit";
         }
         StockRequest stockRequest = dto.toEntity();
+        if(stockRequest.getStatus().equals(RequestStatus.FINISHED)){
+            //TODO criar e salvar o StockEntry aqui. Feito, verificar se funciona após fazer o index do stockEntry
+            StockEntry stockEntry = new StockEntry();
+            stockEntry.setAmount(stockRequest.getAmount());
+            stockEntry.setProduct(result.get());
+            stockEntryService.save(stockEntry);
+        }
         stockRequest.setProduct(result.get());
         stockRequestService.save(stockRequest);
 
