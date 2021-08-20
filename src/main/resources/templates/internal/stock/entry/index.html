@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Entradas de estoque</title>
+</head>
+<body>
+<main>
+
+    <h1 class="title">
+        Entradas de estoque
+    </h1>
+
+    <div th:switch="${stockEntries.isEmpty()}">
+        <h2 th:case="true">Ainda nenhuma entrada!</h2>
+        <div th:case="false">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Produto</th>
+                        <th>Data</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="stock : ${stockEntries}">
+                        <td th:text="${stock.id}"></td>
+                        <td th:text="${stock.product.name}"></td>
+                        <td th:text="${#dates.format(stock.createdAt, 'dd MMM yyyy')}"></td>
+                        <td th:text="${stock.amount}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
