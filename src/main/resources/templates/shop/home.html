@@ -8,6 +8,28 @@
 </head>
 <body>
     <main class="mx-4 mb-4">
+        <!-- Menu lateral de seleção -->
+        <aside class="menu" style="position: absolute;">
+            <p class="menu-label">Modelos</p>
+            <ul class="menu-list">
+                <li>
+                    <a th:href="@{|?model=|}">Todos</a>
+                </li>
+                <li th:each="model : ${models}">
+                    <a th:href="@{|?model=${model}|}" th:text="${model}"></a>
+                </li>
+            </ul>
+            <p class="menu-label">Fabricantes</p>
+            <ul class="menu-list">
+                <li>
+                    <a th:href="@{|?manufacturer=|}">Todos</a>
+                </li>
+                <li th:each="manufacturer : ${manufacturers}">
+                    <a th:href="@{|?manufacturer=${manufacturer}|}" th:text="${manufacturer}"></a>
+                </li>
+            </ul>
+        </aside>
+        <!-- Listagem de produtos -->
         <div class="container is-max-desktop">
             <div class="column columns is-mobile is-centered">
                 <h1 class="title is-1" style="position: relative; bottom: .6em; z-index: 50;">
