@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Editar solicitação de montagem</title>
+</head>
+<body>
+
+<main>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+            <li class="is-active">
+                <a th:href="@{/internal/mounting/edit}" aria-current="page">Editar solicitação de montagem</a>
+            </li>
+        </ul>
+    </nav>
+    <h1 class="title">
+        Editar solicitação de montagem
+    </h1>
+
+    <form th:action="@{/internal/mounting/edit}" method="post" th:object="${dto}">
+
+        <input type="hidden" th:field="*{id}">
+        <input id="fieldDate" class="input" type="hidden" th:field="*{dateRequest}">
+        <input id="fieldPlace" class="input" type="hidden" th:field="*{place}">
+
+        <div class="field">
+            <label for="fieldStatus" class="label">Status da montagem</label>
+            <div class="control">
+                <label for="fieldCheckboxFinalizada" class="radio">
+                    <input id="fieldCheckboxFinalizada" type="radio" th:value="'RESOLVED'" th:field="*{status}">
+                    Finalizado
+                </label>
+                <label for="fieldCheckboxCancelada" class="radio">
+                    <input id="fieldCheckboxCancelada" type="radio" th:value="'CANCELLED'" th:field="*{status}">
+                    Cancelado
+                </label>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="button is-link" type="submit">
+                Atualizar
+            </button>
+            <a th:href="@{/internal}" class="button">
+                Cancelar
+            </a>
+        </div>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+        </ul>
+    </form>
+</main>
+
+</body>
+</html>
