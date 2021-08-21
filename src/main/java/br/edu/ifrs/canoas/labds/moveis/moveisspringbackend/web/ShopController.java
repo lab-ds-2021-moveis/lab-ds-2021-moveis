@@ -37,7 +37,7 @@ public class ShopController {
             @RequestParam(value = "manufacturer", defaultValue = "") String productManufacturer,
             Model model
     ) {
-        ProductSpecification spec = new ProductSpecification(productName, productModel, productManufacturer);
+        ProductSpecification spec = new ProductSpecification(productName.trim(), productModel, productManufacturer);
 
         Page<Product> page = productService.findPageWithSpec(PageRequest.of(pageNumber, size), spec);
         List<String> models = productService.getModels();
