@@ -10,6 +10,8 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.PurchaseServi
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.SecurityService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.session.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,8 +99,13 @@ public class PurchaseController {
     }
 
     @GetMapping("/internal/purchases")
-    public String internalListAllPurchases(Model model) {
-        model.addAttribute("purchases", purchaseService.findAll());
+    public String internalListAllPurchases(
+            @RequestParam(value = "p", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            Model model
+    ) {
+        Page<Purchase> page = purchaseService.findPage(PageRequest.of(pageNumber, size));
+        model.addAttribute("page", page);
         return "/internal/purchases/index";
     }
 

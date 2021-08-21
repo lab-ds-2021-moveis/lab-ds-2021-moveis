@@ -32,7 +32,7 @@ public class ProductController {
     @GetMapping
     public String list(
             @RequestParam(value = "p", defaultValue = "0") Integer pageNumber,
-            @RequestParam(value = "size", defaultValue = "6") Integer size,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
             Model model
     ) {
         Page<Product> page = productService.findPage(PageRequest.of(pageNumber, size));

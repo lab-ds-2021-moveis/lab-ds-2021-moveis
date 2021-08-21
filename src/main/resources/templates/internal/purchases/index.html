@@ -19,7 +19,7 @@
         <h1 class="title">
             Registro de vendas
         </h1>
-        <div th:switch="${purchases.isEmpty()}">
+        <div th:switch="${page.getContent().isEmpty()}">
             <h2 th:case="true">Ainda nenhuma venda!</h2>
             <div th:case="false">
                 <table class="table is-striped is-hoverable is-fullwidth">
@@ -34,7 +34,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="purchase : ${purchases}">
+                    <tr th:each="purchase : ${page.getContent()}">
                         <td th:text="${purchase.id}"></td>
                         <td th:text="${#dates.format(purchase.createdAt, 'dd MMM yyyy')}"></td>
                         <td>
@@ -51,6 +51,41 @@
                     </tr>
                     </tbody>
                 </table>
+                <!-- Paginação -->
+                <nav class="pagination" role="navigation" aria-label="pagination">
+                    <th:block th:switch="${page.getPageable().getPageNumber()}">
+                        <a th:case="0" class="pagination-previous" title="Essa é a primeira página" disabled>
+                            Anterior
+                        </a>
+                        <a th:case="*" th:href="@{/internal/purchases(p=${page.getPageable().getPageNumber() - 1})}" class="pagination-previous">
+                            Anterior
+                        </a>
+                    </th:block>
+                    <th:block th:switch="${page.getPageable().getPageNumber()}">
+                        <a th:case="${page.getTotalPages() - 1}" class="pagination-previous" title="Essa é a última página" disabled>
+                            Próxima
+                        </a>
+                        <a th:case="*" th:href="@{/internal/purchases(p=${page.getPageable().getPageNumber() + 1})}" class="pagination-next">
+                            Próxima
+                        </a>
+                    </th:block>
+                    <div class="pagination-list">
+                        <p>
+                            <span class="tag is-medium">
+                                <th:block>Página</th:block>
+                                <th:block th:text="${page.getPageable().getPageNumber() + 1}"></th:block>
+                                <th:block>/</th:block>
+                                <th:block th:text="${page.getTotalPages()}"></th:block>
+                            </span>
+                            <span class="tag is-medium">
+                                <th:block th:text="${page.getContent().size()}"></th:block>
+                                de
+                                <th:block th:text="${page.getTotalElements()}"></th:block>
+                                elementos
+                            </span>
+                        </p>
+                    </div>
+                </nav>
             </div>
         </div>
     </main>
