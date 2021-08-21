@@ -7,6 +7,8 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductServic
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.validation.StoreProductDTOValidator;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.validation.UpdateProductDTOValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +30,13 @@ public class ProductController {
     private UpdateProductDTOValidator updateProductDTOValidator;
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("products", productService.findAll());
+    public String list(
+            @RequestParam(value = "p", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "size", defaultValue = "6") Integer size,
+            Model model
+    ) {
+        Page<Product> page = productService.findPage(PageRequest.of(pageNumber, size));
+        model.addAttribute("page", page);
         return "internal/product/index";
     }
 

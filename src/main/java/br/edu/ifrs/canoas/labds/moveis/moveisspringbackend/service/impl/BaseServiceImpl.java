@@ -1,13 +1,11 @@
 package br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.impl;
 
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.BaseService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +17,11 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public List<T> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Page<T> findPage(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
