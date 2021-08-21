@@ -7,21 +7,21 @@
     <title>Loja de móveis</title>
 </head>
 <body>
-    <main class="mx-4">
+    <main class="mx-4 mb-4">
         <div class="container is-max-desktop">
             <div class="column columns is-mobile is-centered">
                 <h1 class="title is-1" style="position: relative; bottom: .6em; z-index: 50;">
                     Loja de móveis
                 </h1>
             </div>
-            <div th:switch="${products.isEmpty()}">
+            <div th:switch="${page.getContent().isEmpty()}">
                 <h2 th:case="true">Ainda nenhum produto!</h2>
                 <div
                     th:case="false"
                     class="column is-flex-tablet is-flex-wrap-wrap"
                 >
                     <div
-                        th:each="product : ${products}"
+                        th:each="product : ${page.getContent()}"
                         class="column is-4"
                     >
                         <div class="card">
@@ -90,8 +90,11 @@
                                 </div>
                             </footer>
                         </div>
+                        <!-- /card -->
                     </div>
+                    <!-- /column -->
                 </div>
+                <nav th:replace="fragments/paging :: paginator"></nav>
             </div>
         </div>
     </main>
