@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,18 +22,20 @@ public class PurchaseServiceImpl extends BaseServiceImpl<Purchase> implements Pu
     private ProductRepository productRepository;
 
     @Override
-    public Purchase saveFromShoppingCart(ShoppingCart shoppingCart, Customer customer, Employee employee) {
+    public Purchase saveFromShoppingCart(ShoppingCart shoppingCart, Customer customer, Optional<Mounting> mounting, Optional<Employee> employee) {
         Purchase purchase = new Purchase();
 
         purchase.setTotalValue(shoppingCart.getTotal());
         purchase.setCustomer(customer);
-        purchase.setEmployee(employee);
+
+        if (employee.isPresent()) {
+            purchase.setEmployee(employee.get());
+        }
+
+        if (mounting.isPresent()) {
+            purchase.setMounting(mounting.get());
+        }
 
         return purchaseRepository.save(purchase);
-    }
-
-    @Override
-    public Purchase saveFromShoppingCart(ShoppingCart shoppingCart, Customer customer) {
-        return saveFromShoppingCart(shoppingCart, customer, null);
     }
 }
