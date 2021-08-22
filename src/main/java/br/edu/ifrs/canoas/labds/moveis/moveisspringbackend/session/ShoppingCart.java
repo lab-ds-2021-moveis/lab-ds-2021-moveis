@@ -19,6 +19,8 @@ public class ShoppingCart {
 
     private Map<Long, CartItem> items = new HashMap<>();
 
+    private Long idMounting;
+
     public Double getTotal() {
         Double value = 0.0;
         for (CartItem item : items.values()) {

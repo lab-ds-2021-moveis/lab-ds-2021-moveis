@@ -47,6 +47,10 @@ public class Purchase implements BaseEntity, Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchase")
     private List<ProductPurchase> productPurchases = new ArrayList<>();
 
+    @OneToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "id_montagem")
+    private Mounting mounting;
+
     public String toString() {
         return "Purchase" +
             "(" +

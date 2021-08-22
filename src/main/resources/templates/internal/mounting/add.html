@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Adicionar montagem para a compra</title>
+</head>
+<body>
+
+<main>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a th:href="@{/internal}">Painel de funcionários</a></li>
+            <li class="is-active">
+                <a th:href="@{/internal/mounting/add}" aria-current="page">Adicionar montagem para a compra</a>
+            </li>
+        </ul>
+    </nav>
+    <h1 class="title">
+        Adicionar montagem para a compra
+    </h1>
+
+    <form th:action="@{/internal/mounting/add}" method="post" th:object="${dto}">
+
+        <div class="field">
+            <label for="fieldDate" class="label">Data</label>
+            <div class="control">
+                <input id="fieldDate" class="input" type="date" th:field="*{dateRequest}">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fieldPlace" class="label">Local da montagem:</label>
+            <div class="control">
+                <input id="fieldPlace" class="input" type="text" th:field="*{place}">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="button is-link" type="submit">
+                Adicionar
+            </button>
+            <a th:href="@{/internal}" class="button">
+                Cancelar
+            </a>
+        </div>
+
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+        </ul>
+    </form>
+</main>
+
+</body>
+</html>

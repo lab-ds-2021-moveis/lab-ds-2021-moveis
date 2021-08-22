@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="layouts/internal :: layout(~{::title}, ~{::main})"
+>
+<head>
+    <title>Solicitações de montagem</title>
+</head>
+<body>
+<main>
+
+    <h1 class="title">
+        Solicitações de montagem
+    </h1>
+
+    <div th:switch="${mountings.isEmpty()}">
+        <h2 th:case="true">Ainda nenhuma solicitação ou todas fechadas!</h2>
+        <div th:case="false">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <!-- <th>Compra</th> -->
+                    <th>Data</th>
+                    <th>Local</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="mount : ${mountings}">
+                        <div th:switch="${#strings.toString(mount.status)}">
+                            <td th:case="'CANCELLED'" th:text="${mount.id}"></td>
+                            <td th:case="'RESOLVED'"  th:text="${mount.id}"></td>
+                            <td th:case="*">
+                                <a th:href="@{/internal/mounting/{id}(id=${mount.id})}" th:text="${mount.id}"></a> <!-- Aqui colocar o caso em que o link de editar é permitido -->
+                            </td>
+                        </div>
+
+                        <!-- <td th:text="${mount.purchase.id}"></td>   Aqui tem que puxar o id da compra com base na relação dessa montagem com a compra feita -->
+                        <td th:text="${#dates.format(mount.dateRequest, 'dd MMM yyyy')}"></td>
+                        <td th:text="${mount.place}"></td>
+                        <div th:switch="${#strings.toString(mount.status)}">
+                            <td th:case="'CANCELLED'">Cancelado</td>
+                            <td th:case="'RESOLVED'">Resolvido</td>
+                            <td th:case="'WAITING'">Esperando</td>
+                            <td th:case="*">Desconhecido</td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
