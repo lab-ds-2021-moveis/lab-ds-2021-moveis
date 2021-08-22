@@ -11,13 +11,12 @@ import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.ProductServic
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.StockEntryService;
 import br.edu.ifrs.canoas.labds.moveis.moveisspringbackend.service.StockRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -35,8 +34,13 @@ public class StockRequestController {
     private StockEntryService stockEntryService;
 
     @GetMapping
-    public String listStockRequests(Model model){
-        model.addAttribute("stockRequests", stockRequestService.findAll());
+    public String listStockRequests(
+            @RequestParam(value = "p", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            Model model
+    ){
+        Page<StockRequest> page = stockRequestService.findPage(PageRequest.of(pageNumber, size));
+        model.addAttribute("page", page);
         return "internal/stock/request/index";
     }
 

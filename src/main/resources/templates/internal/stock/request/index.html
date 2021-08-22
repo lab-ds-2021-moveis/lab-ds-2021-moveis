@@ -18,7 +18,7 @@
         </a>
     </div>
 
-    <div th:switch="${stockRequests.isEmpty()}">
+    <div th:switch="${page.getContent().isEmpty()}">
         <h2 th:case="true">Ainda nenhuma solicitação!</h2>
         <div th:case="false">
             <table class="table is-striped is-hoverable is-fullwidth">
@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="stock : ${stockRequests}">
+                    <tr th:each="stock : ${page.getContent()}">
                         <div th:switch="${#strings.toString(stock.status)}">
                             <td th:case="'CANCELLED'" th:text="${stock.id}"></td>
                             <td th:case="'FINISHED'"  th:text="${stock.id}"></td>
@@ -54,6 +54,7 @@
                     </tr>
                 </tbody>
             </table>
+            <nav th:replace="fragments/paging :: paginator"></nav>
         </div>
     </div>
 

@@ -24,7 +24,7 @@
                 Adicionar novo produto
             </a>
         </div>
-        <div th:switch="${products.isEmpty()}">
+        <div th:switch="${page.getContent().isEmpty()}">
             <h2 th:case="true">Ainda nenhum produto!</h2>
             <div th:case="false">
                 <table class="table is-striped is-hoverable is-fullwidth">
@@ -39,7 +39,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="product : ${products}">
+                    <tr th:each="product : ${page.getContent()}">
                         <td th:text="${product.id}"></td>
                         <td>
                             <a th:href="@{/internal/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
@@ -51,6 +51,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav th:replace="fragments/paging :: paginator"></nav>
             </div>
         </div>
     </main>

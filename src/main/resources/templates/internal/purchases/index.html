@@ -19,7 +19,7 @@
         <h1 class="title">
             Registro de vendas
         </h1>
-        <div th:switch="${purchases.isEmpty()}">
+        <div th:switch="${page.getContent().isEmpty()}">
             <h2 th:case="true">Ainda nenhuma venda!</h2>
             <div th:case="false">
                 <table class="table is-striped is-hoverable is-fullwidth">
@@ -34,7 +34,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="purchase : ${purchases}">
+                    <tr th:each="purchase : ${page.getContent()}">
                         <td th:text="${purchase.id}"></td>
                         <td th:text="${#dates.format(purchase.createdAt, 'dd MMM yyyy')}"></td>
                         <td>
@@ -51,6 +51,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav th:replace="fragments/paging :: paginator"></nav>
             </div>
         </div>
     </main>

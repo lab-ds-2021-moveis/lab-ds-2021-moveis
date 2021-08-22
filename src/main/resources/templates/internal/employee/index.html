@@ -24,7 +24,7 @@
                 Lista de funcionários
             </a>
         </div>
-        <div th:switch="${employees}">
+        <div th:switch="${page.getContent()}">
             <h2 th:case="null">Ainda nenhum funcionário!</h2>
             <div th:case="*">
                 <table class="table is-striped is-hoverable is-fullwidth">
@@ -37,7 +37,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="employee : ${employees}">
+                    <tr th:each="employee : ${page.getContent()}">
                         <td th:text="${employee.id}"></td>
                         <td th:text="${employee.name}"></td>
                         <td th:text="${employee.credential}"></td>
@@ -45,6 +45,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav th:replace="fragments/paging :: paginator"></nav>
             </div>
         </div>
     </main>
