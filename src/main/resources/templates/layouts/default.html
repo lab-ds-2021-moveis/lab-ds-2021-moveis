@@ -18,7 +18,7 @@
                     <form th:action="@{/shop}" method="GET">
                         <div class="field has-addons">
                             <div class="control">
-                                <input type="text" class="input is-small is-rounded" name="name">
+                                <input type="text" class="input is-small is-rounded" name="name" th:value="${#httpServletRequest.getParameter('name')}">
                             </div>
                             <div class="control">
                                 <button type="submit" class="button is-secondary is-small is-rounded">

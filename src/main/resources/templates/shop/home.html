@@ -16,7 +16,14 @@
                     <a th:href="@{|?model=|}">Todos</a>
                 </li>
                 <li th:each="model : ${models}">
-                    <a th:href="@{|?model=${model}|}" th:text="${model}"></a>
+                    <th:block th:switch="${#httpServletRequest.getParameter('model')}">
+                        <th:block th:case="${model}">
+                            <a class="is-active" th:text="${model}"></a>
+                        </th:block>
+                        <th:block th:case="*">
+                            <a th:href="@{|?model=${model}|}" th:text="${model}"></a>
+                        </th:block>
+                    </th:block>
                 </li>
             </ul>
             <p class="menu-label">Fabricantes</p>
@@ -25,19 +32,83 @@
                     <a th:href="@{|?manufacturer=|}">Todos</a>
                 </li>
                 <li th:each="manufacturer : ${manufacturers}">
-                    <a th:href="@{|?manufacturer=${manufacturer}|}" th:text="${manufacturer}"></a>
+                    <th:block th:switch="${#httpServletRequest.getParameter('manufacturer')}">
+                        <th:block th:case="${manufacturer}">
+                            <a class="is-active" th:text="${manufacturer}"></a>
+                        </th:block>
+                        <th:block th:case="*">
+                            <a th:href="@{|?manufacturer=${manufacturer}|}" th:text="${manufacturer}"></a>
+                        </th:block>
+                    </th:block>
                 </li>
             </ul>
         </aside>
-        <!-- Listagem de produtos -->
         <div class="container is-max-desktop">
+            <!-- Titulo principal -->
             <div class="column columns is-mobile is-centered">
                 <h1 class="title is-1" style="position: relative; bottom: .6em; z-index: 50;">
                     Loja de móveis
                 </h1>
             </div>
+            <!-- Formulário de filtro -->
+            <div th:if="${!spec.getModel().isEmpty() || !spec.getManufacturer().isEmpty() || !spec.getName().isEmpty()}" class="mb-2">
+                <form action="/shop" method="GET">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label for="fieldName" class="label">Nome</label>
+                                <div class="control">
+                                    <input id="fieldName" class="input" type="text" name="name" th:value="${spec.getName()}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label for="fieldModel" class="label">Modelo</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="fieldModel" th:value="${spec.getModel()}" name="model">
+                                            <option value="">Todos</option>
+                                            <option
+                                                th:each="model : ${models}"
+                                                th:text="${model}"
+                                                th:selected="${model eq spec.getModel()}"
+                                            ></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label for="fieldManufacturer" class="label">Fabricante</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="fieldManufacturer" th:value="${spec.getManufacturer()}" name="manufacturer">
+                                            <option value="">Todos</option>
+                                            <option
+                                                th:each="manufacturer : ${manufacturers}"
+                                                th:text="${manufacturer}"
+                                                th:selected="${manufacturer eq spec.getManufacturer()}"
+                                            ></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-flex is-align-items-end">
+                            <div class="buttons" style="width: 100%">
+                                <button type="submit" class="button is-link is-fullwidth">
+                                    Pesquisar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Listagem de produtos -->
             <div th:switch="${page.getContent().isEmpty()}">
-                <h2 th:case="true">Ainda nenhum produto!</h2>
+                <h2 th:case="true" class="mb-4">Ainda nenhum produto!</h2>
                 <div
                     th:case="false"
                     class="column is-flex-tablet is-flex-wrap-wrap"
