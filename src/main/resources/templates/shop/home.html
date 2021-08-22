@@ -51,12 +51,12 @@
                 </h1>
             </div>
             <!-- Formulário de filtro -->
-            <div th:if="${!spec.getModel().isEmpty() || !spec.getManufacturer().isEmpty() || !spec.getName().isEmpty()}">
+            <div th:if="${!spec.getModel().isEmpty() || !spec.getManufacturer().isEmpty() || !spec.getName().isEmpty()}" class="mb-2">
                 <form action="/shop" method="GET">
                     <div class="columns">
                         <div class="column">
                             <div class="field">
-                                <label for="fieldName" class="label">Filtro</label>
+                                <label for="fieldName" class="label">Nome</label>
                                 <div class="control">
                                     <input id="fieldName" class="input" type="text" name="name" th:value="${spec.getName()}">
                                 </div>
@@ -96,14 +96,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="buttons is-right">
-                        <a th:href="@{/shop}" class="button is-secondary">
-                            Cancelar
-                        </a>
-                        <button type="submit" class="button is-link">
-                            Pesquisar
-                        </button>
+                        <div class="column is-flex is-align-items-end">
+                            <div class="buttons" style="width: 100%">
+                                <button type="submit" class="button is-link is-fullwidth">
+                                    Pesquisar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
