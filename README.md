@@ -2,6 +2,8 @@
 
 > Sistema de loja de móveis
 
+Requisitos: Java 11
+
 Para rodar o sistema:
 
 ```
